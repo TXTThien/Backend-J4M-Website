@@ -1,0 +1,42 @@
+package org.example.entity;
+import jakarta.persistence.*;
+import lombok.*;
+import org.example.entity.enums.Status;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@Entity(name = "Discount")
+@Table(name = "discount", schema = "shopaonam")
+public class Discount {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "DiscountID", nullable = false)
+    private Integer discountID;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CategoryID")
+    private Category categoryID;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ProductTypeID")
+    private ProductType productTypeID;
+
+    @Column(name = "DiscountPercent",  precision = 5, scale = 2)
+    private BigDecimal discountPercent;
+
+    @Column(name = "StartDate", nullable = false)
+    private LocalDate startDate;
+
+    @Column(name = "EndDate", nullable = false)
+    private LocalDate endDate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "Status", nullable = false)
+    protected Status status;;
+}
