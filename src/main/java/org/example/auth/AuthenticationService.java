@@ -2,7 +2,7 @@ package org.example.auth;
 
 import org.example.entity.Account;
 import org.example.service.token.*;
-import org.example.services.securityService.JwtService;
+import org.example.service.securityService.JwtService;
 import org.example.service.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.example.repository.*;
 
@@ -47,17 +48,33 @@ public class AuthenticationService {
                         request.getPassword()
                 )
         );
+
         var user = repository.findByUsername(request.getUsername())
-                .orElseThrow();
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        System.out.println("Tài khoản: " + user.getUsername() + ", ID: " + user.getAccountID());
+
+        Integer idAccount = user.getAccountID();
+
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         revokeAllUserTokens(user);
         saveUserToken(user, jwtToken);
-        return AuthenticationResponse.builder()
+
+        AuthenticationResponse authResponse = AuthenticationResponse.builder()
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
+                .idAccount(idAccount)
                 .build();
+
+        System.out.println("AuthenticationResponse:");
+        System.out.println("ID Account: " + authResponse.getIdAccount());
+        System.out.println("Access Token: " + authResponse.getAccessToken());
+        System.out.println("Refresh Token: " + authResponse.getRefreshToken());
+
+        return authResponse;
     }
+
 
     private void saveUserToken(Account user, String jwtToken) {
         var token = Token.builder()

@@ -53,6 +53,7 @@ public class SecurityConfiguration {
     private final LogoutHandler logoutHandler;
 
 
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -65,6 +66,7 @@ public class SecurityConfiguration {
                             .requestMatchers("/dashboard").hasAnyAuthority(user.name())
                             .anyRequest().authenticated();
                 })
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin(form -> form
                         .loginPage("/login")
                         .defaultSuccessUrl("/j4m", true)

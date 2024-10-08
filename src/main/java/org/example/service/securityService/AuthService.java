@@ -1,4 +1,4 @@
-package org.example.services.securityService;
+package org.example.service.securityService;
 
 import org.example.repository.AccountRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -14,7 +14,7 @@ import org.springframework.ui.Model;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
-    private final org.example.services.securityService.JwtService jwtService;
+    private final org.example.service.securityService.JwtService jwtService;
     @Autowired
     private AccountRepository accountRepository;
 

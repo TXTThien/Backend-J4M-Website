@@ -17,7 +17,7 @@ public class HomeController {
     GetIDAccountFromAuthService getIDAccountService;
     @RequestMapping({"/", "/j4m"})
     public ModelAndView j4m(Model model) {
-        int idAccount = getIDAccountService.common(model);
+        int idAccount = getIDAccountService.common();
         System.out.println("IdAccount: "+ idAccount);
         return new ModelAndView("redirect:http://localhost:8000");
     }

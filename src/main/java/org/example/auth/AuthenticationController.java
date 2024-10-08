@@ -4,7 +4,9 @@ package org.example.auth;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.example.service.securityService.GetIDAccountFromAuthService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,7 @@ import java.io.IOException;
 public class AuthenticationController {
 
     private final AuthenticationService service;
+    private final GetIDAccountFromAuthService getIDAccountFromAuthService;
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
@@ -31,6 +34,8 @@ public class AuthenticationController {
     ) {
         return ResponseEntity.ok(service.authenticate(request));
     }
+
+
 
     @PostMapping("/refresh-token")
     public void refreshToken(

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import lombok.RequiredArgsConstructor;
 import org.example.entity.Account;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -17,21 +18,26 @@ import org.example.repository.*;
 @Service
 @RequiredArgsConstructor
 public class GetIDAccountFromAuthService {
-    private final org.example.services.securityService.JwtService jwtService;
+    private final org.example.service.securityService.JwtService jwtService;
     @Autowired
     private AccountRepository accountRepository;
 
-    public int common(Model model) {
+    public int common() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         int idAccount = -1; // Default value if user is not authenticated
 
-        if (auth.isAuthenticated()) {
+        if (auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken)) {
             var account = accountRepository.findByUsername(auth.getName());
             if (account.isPresent()) {
                 idAccount = account.get().getAccountID();
             }
         }
+        if (auth != null) {
+            System.out.println("Tình trạng xác thực: " + auth.getName() + ", authenticated: " + auth.isAuthenticated());
+        }
+
 
         return idAccount;
     }
+
 }

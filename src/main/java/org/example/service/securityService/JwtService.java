@@ -1,4 +1,4 @@
-package org.example.services.securityService;
+package org.example.service.securityService;
 
 import java.security.Key;
 import java.util.Date;
