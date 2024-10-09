@@ -10,11 +10,11 @@ import org.example.entity.enums.Status;
 @Getter
 @Setter
 @Entity(name = "ProductSize")
-@Table(name = "productSize", schema = "shopaonam")
+@Table(name = "productsize", schema = "shopaonam")
 public class ProductSize {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ProductSizeID", nullable = false)
+    @Column(name = "product_sizeid", nullable = false)
     private Integer productSizeID;
 
     @ManyToOne

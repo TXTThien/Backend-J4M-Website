@@ -25,6 +25,7 @@ public class AccountServiceImpl implements IAccountService {
         return null;
     }
 
+
     public boolean existsByUsername(String username) {
         return accountRepository.existsByUsername(username);
     }
@@ -103,7 +104,10 @@ public class AccountServiceImpl implements IAccountService {
         return accountRepository.findAccountByEmail(email);
     }
 
-
+    @Override
+    public Optional<Account> findAccountByUsername(String username) {
+        return accountRepository.findAccountByUsername(username);
+    }
     @Override
     public <S extends Account> S save(S entity) {
         return accountRepository.save(entity);
@@ -112,6 +116,11 @@ public class AccountServiceImpl implements IAccountService {
     @Override
     public Optional<Account> findByUsername(String username) {
         return accountRepository.findAccountByUsername(username);
+    }
+
+    @Override
+    public String findEmailByUserName(String username) {
+        return accountRepository.findEmailByUsername(username);
     }
 
 }

@@ -26,8 +26,12 @@ public interface IAccountService {
     void updateAddressEmailPhoneNumberAccount(String name, String phoneNumber, String address, int accountID);
     void updatePassword(String password, int accountID);
     Optional<Account> findAccountByEmail (String email);
+
+    Optional<Account> findAccountByUsername(String username);
+
     <S extends Account> S save(S entity);
     Optional<Account> findByUsername(String username);
 
+    String findEmailByUserName (String username);
 
 }

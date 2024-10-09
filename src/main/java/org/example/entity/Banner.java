@@ -19,23 +19,23 @@ public class Banner implements Serializable {
     @Column(name = "BannerID", nullable = false)
     private Integer bannerID;
 
-    @Column(name = "BannerImage", nullable = false)
+    @Column(name = "banner_image", nullable = false)
     private String bannerImage;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "BannerType", nullable = false)
+    @Column(name = "banner_type", nullable = false)
     protected BannerType bannerType;
 
     @ManyToOne
-    @JoinColumn (name = "LinkToProductID")
+    @JoinColumn (name = "link_to_productid")
     private Product productID;
 
     @ManyToOne
-    @JoinColumn (name = "LinkToProductTypeID")
+    @JoinColumn (name = "link_to_product_typeid")
     private ProductType productTypeID;
 
     @ManyToOne
-    @JoinColumn (name = "LinkToCategoryID")
+    @JoinColumn (name = "link_to_categoryid")
     private Category categoryID;
 
     @Enumerated(EnumType.STRING)

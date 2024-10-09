@@ -1,5 +1,6 @@
 package org.example.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.aspectj.weaver.ast.Or;
@@ -12,6 +13,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Getter
 @Setter
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity(name = "Product")
 @Table(name = "product", schema = "shopaonam")
 public class Product {
@@ -27,12 +29,12 @@ public class Product {
     private String title;
 
     @Lob
-    @Column(name = "Description", nullable = false)
+    @Column(name = "description", nullable = false)
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "ProductTypeID")
-    private ProductType productTypeID;
+    @JoinColumn(name = "product_typeid")
+    private ProductType productType;
 
     @Column(name = "Price", nullable = false, precision = 10, scale = 2)
     private BigDecimal price;

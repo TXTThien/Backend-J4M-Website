@@ -14,10 +14,10 @@ import org.example.entity.enums.Status;
 public class ProductType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ProductTypeID", nullable = false)
+    @Column(name = "product_typeid", nullable = false)
     private Integer productTypeID;
 
-    @Column(name = "TypeName",length = 10,nullable = false)
+    @Column(name = "type_name",length = 10,nullable = false)
     private String typeName;
 
     @ManyToOne

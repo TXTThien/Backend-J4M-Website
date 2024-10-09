@@ -10,6 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Builder
@@ -17,10 +18,10 @@ import java.util.*;
 @NoArgsConstructor
 @Getter
 @Setter
-@JsonIgnoreProperties("bills")
+@JsonIgnoreProperties({"bills", "hibernateLazyInitializer", "handler"})
 @Entity(name = "Account")
 @Table(name = "account", schema = "shopaonam")
-public class Account implements UserDetails{
+public class Account implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "AccountID", nullable = false)
@@ -40,7 +41,7 @@ public class Account implements UserDetails{
     @Column(name = "Phonenumber", length = 10, nullable = false)
     private String phoneNumber;
 
-    @Column(name = "Address", length =500, nullable = false)
+    @Column(name = "Address", length = 500, nullable = false)
     private String address;
 
     @Column(name = "Name", length = 100, nullable = false)
@@ -49,11 +50,16 @@ public class Account implements UserDetails{
     @Column(name = "Email", length = 100, nullable = false)
     private String email;
 
-
     @Enumerated(EnumType.STRING)
     @Column(name = "Status", nullable = false)
     protected Status status;
 
+    @Column(name = "Otp", length = 6)
+    private String otp;
+
+    // Thời gian hết hạn của mã OTP
+    @Column(name = "OtpExpiry")
+    private LocalDateTime otpExpiry;
 
     @Override
     @JsonIgnore
@@ -88,6 +94,4 @@ public class Account implements UserDetails{
     public boolean isCredentialsNonExpired() {
         return true;
     }
-
-
 }

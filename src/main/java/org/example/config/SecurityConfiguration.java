@@ -36,6 +36,7 @@ public class SecurityConfiguration {
 
     private static final String[] WHITE_LIST_URL = {
             "/api/v1/auth/**",
+            "/api/v1/product/**",
             "/api/v1/admin/**",
             "/api/v1/payments/viewgiohang/**",
             "/v3/api-docs/**",
@@ -60,9 +61,11 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req -> {
                     req
+                            .requestMatchers("/").permitAll()
                             .requestMatchers(WHITE_LIST_URL).permitAll()
                             .requestMatchers("/api/v1/management/**").hasAnyRole(admin.name())
-                            .requestMatchers("/admin").hasAnyAuthority(user.name())
+                            .requestMatchers("/admin").hasAnyAuthority(admin.name())
+                            .requestMatchers("/user").hasAnyAuthority(user.name())
                             .requestMatchers("/dashboard").hasAnyAuthority(user.name())
                             .anyRequest().authenticated();
                 })

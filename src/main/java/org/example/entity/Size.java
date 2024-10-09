@@ -19,7 +19,7 @@ public class Size {
     @Column(name = "SizeID", nullable = false)
     private Integer sizeID;
 
-    @Column(name = "SizeName",length = 10,nullable = false)
+    @Column(name = "Sizename",length = 10,nullable = false)
     private String sizeName;
 
     @Column(name = "Bonus", nullable = false, precision = 5, scale = 2)

@@ -17,7 +17,7 @@ public class Brand {
     @Column(name = "BrandID", nullable = false)
     private Integer brandID;
 
-    @Column(name = "BrandName",length = 100,nullable = false)
+    @Column(name = "Brandname",length = 100,nullable = false)
     private String brandName;
 
     @Enumerated(EnumType.STRING)

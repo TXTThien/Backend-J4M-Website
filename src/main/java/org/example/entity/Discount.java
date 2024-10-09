@@ -24,16 +24,16 @@ public class Discount {
     private Category categoryID;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ProductTypeID")
+    @JoinColumn(name = "product_typeid")
     private ProductType productTypeID;
 
-    @Column(name = "DiscountPercent",  precision = 5, scale = 2)
+    @Column(name = "Discountpercent",  precision = 5, scale = 2)
     private BigDecimal discountPercent;
 
-    @Column(name = "StartDate", nullable = false)
+    @Column(name = "start_date", nullable = false)
     private LocalDate startDate;
 
-    @Column(name = "EndDate", nullable = false)
+    @Column(name = "end_date", nullable = false)
     private LocalDate endDate;
 
     @Enumerated(EnumType.STRING)

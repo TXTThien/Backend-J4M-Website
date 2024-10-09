@@ -17,10 +17,10 @@ public class News {
     @Column(name = "NewsID", nullable = false)
     private Integer newsID;
 
-    @Column(name = "NewsImage",nullable = false)
+    @Column(name = "news_image",nullable = false)
     private String newsImage;
 
-    @Column(name = "NewsTitle",length = 100, nullable = false)
+    @Column(name = "news_title",length = 100, nullable = false)
     private String newsTitle;
 
     @Lob

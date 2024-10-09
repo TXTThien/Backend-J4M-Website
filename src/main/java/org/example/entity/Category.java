@@ -17,7 +17,7 @@ public class Category {
     @Column(name = "CategoryID", nullable = false)
     private Integer categoryID;
 
-    @Column(name = "CategoryName",length = 10,nullable = false)
+    @Column(name = "Categoryname",length = 10,nullable = false)
     private String categoryName;
 
     @Enumerated(EnumType.STRING)

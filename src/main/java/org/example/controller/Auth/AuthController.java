@@ -54,11 +54,6 @@ public class AuthController {
                 .header("Location", "http://localhost:8000/login")
                 .build();
     }
-    @PostMapping("/success")
-    @ResponseBody
-    public String success(Model model) {
-        Integer idAccount = getIDAccountFromAuthService.common();
-        return "idAccount: " + idAccount;
-    }
+
 
 }
