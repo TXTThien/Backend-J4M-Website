@@ -24,8 +24,11 @@ public class Discount {
     private Category categoryID;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_typeid")
+    @JoinColumn(name = "ProductTypeID")
     private ProductType productTypeID;
+
+
+
 
     @Column(name = "Discountpercent",  precision = 5, scale = 2)
     private BigDecimal discountPercent;

@@ -69,4 +69,8 @@ public class ProductServiceImpl implements IProductService {
         product.setStatus(Status.Disable);
         productRepository.save(product);
     }
+    @Override
+    public Product getProductById(Integer id) {
+        return productRepository.findById(id).orElse(null);
+    }
 }
