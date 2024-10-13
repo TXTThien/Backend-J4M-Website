@@ -17,12 +17,12 @@ public class Image {
     @Column(name = "ImageID", nullable = false)
     private Integer imageID;
 
-    @Column(name = "ImageURL",nullable = false)
+    @Column(name = "ImageURL", nullable = false)
     private String imageURL;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ProductID")
-    private Product productID;
+    @JoinColumn(name = "ProductID", nullable = false)
+    private Product product; // Chắc chắn đây là Product, không phải productID
 
     @Enumerated(EnumType.STRING)
     @Column(name = "Status", nullable = false)
