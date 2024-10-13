@@ -1,7 +1,8 @@
 package org.example.service.Impl;
 
-import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.example.auth.RegisterRequest;
+import org.example.auth.RegisterRequestForAdmin;
 import org.example.entity.*;
 import org.example.entity.enums.Role;
 
@@ -12,7 +13,6 @@ import org.example.service.IAccountService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 @Service
 @RequiredArgsConstructor
@@ -20,18 +20,6 @@ public class AccountServiceImpl implements IAccountService {
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
 
-    @Override
-    public List<Account> getAllAccounts() {
-        return null;
-    }
-
-
-    public boolean existsByUsername(String username) {
-        return accountRepository.existsByUsername(username);
-    }
-    public boolean existsByEmail(String email) {
-        return accountRepository.existsByEmail(email);
-    }
 
     @Override
     public Account getAccountById(Integer accountId) {
@@ -39,30 +27,8 @@ public class AccountServiceImpl implements IAccountService {
         return optionalAccount.orElse(null);
     }
 
-    @Override
-    public Account createAccount(Account account) {
-        // Add any validation or business logic before saving
-        return accountRepository.save(account);
-    }
 
-    @Override
-    public Account updateAccount(Integer accountId, Account updatedAccount) {
-        // Add logic to update account
-        Optional<Account> optionalAccount = accountRepository.findById(accountId);
-        if (optionalAccount.isPresent()) {
-            Account existingAccount = optionalAccount.get();
-            // Update properties of existingAccount with those of updatedAccount
-            // Save the updated account
-            return accountRepository.save(existingAccount);
-        } else {
-            return null; // Account not found
-        }
-    }
 
-    @Override
-    public void deleteAccount(Integer accountId) {
-        accountRepository.deleteById(accountId);
-    }
 
     @Override
     public Account makeAccount(RegisterRequest request) {
@@ -79,32 +45,6 @@ public class AccountServiceImpl implements IAccountService {
     }
 
     @Override
-    public void saveAccount(RegisterRequest request) {
-        // You can implement the save logic if needed
-    }
-
-    @Override
-    public Account findAccountByAccountID(int accountid) {
-        return accountRepository.findAccountByAccountID(accountid);
-    }
-
-    @Override
-    @Transactional
-    public void updateAddressEmailPhoneNumberAccount(String name, String phoneNumber, String address, int accountID) {
-        accountRepository.updateAddressEmailPhoneNumberAccount(name,phoneNumber,address,accountID);
-    }
-
-    @Override
-    public void updatePassword(String password, int accountID) {
-        accountRepository.updatePassword(password,accountID);
-    }
-
-    @Override
-    public Optional<Account> findAccountByEmail(String email) {
-        return accountRepository.findAccountByEmail(email);
-    }
-
-    @Override
     public Optional<Account> findAccountByUsername(String username) {
         return accountRepository.findAccountByUsername(username);
     }
@@ -114,13 +54,46 @@ public class AccountServiceImpl implements IAccountService {
     }
 
     @Override
-    public Optional<Account> findByUsername(String username) {
-        return accountRepository.findAccountByUsername(username);
+    public Account updateAccount(Integer id,  @Valid RegisterRequestForAdmin newAccountRequest) {
+        Optional<Account> optionalAccount = accountRepository.findById(id);
+
+        if (optionalAccount.isPresent()) {
+            Account existingAccount = optionalAccount.get();
+
+            if (newAccountRequest.getName() != null) {
+                existingAccount.setName(newAccountRequest.getName());
+            }
+
+            if (newAccountRequest.getEmail() != null) {
+                existingAccount.setEmail(newAccountRequest.getEmail());
+            }
+
+            if (newAccountRequest.getPhoneNumber() != null) {
+                existingAccount.setPhoneNumber(newAccountRequest.getPhoneNumber());
+            }
+
+            if (newAccountRequest.getAddress() != null) {
+                existingAccount.setAddress(newAccountRequest.getAddress());
+            }
+            if (newAccountRequest.getRole() != null) {
+                existingAccount.setRole(newAccountRequest.getRole());
+            }
+            if (newAccountRequest.getStatus() != null) {
+                existingAccount.setStatus(newAccountRequest.getStatus());
+            }
+
+            return accountRepository.save(existingAccount);
+        } else {
+            return null;
+        }
     }
 
     @Override
-    public String findEmailByUserName(String username) {
-        return accountRepository.findEmailByUsername(username);
+    public void  deleteAccount(Integer id) {
+        Account account = accountRepository.findById(id).orElse(null);
+        assert account != null;
+        account.setStatus(Status.Disable);
+        accountRepository.save(account);
     }
 
 }

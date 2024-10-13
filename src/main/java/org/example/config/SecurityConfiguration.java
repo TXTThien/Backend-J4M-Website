@@ -36,8 +36,6 @@ public class SecurityConfiguration {
 
     private static final String[] WHITE_LIST_URL = {
             "/api/v1/auth/**",
-            "/api/v1/product/**",
-            "/api/v1/admin/**",
             "/api/v1/payments/viewgiohang/**",
             "/v3/api-docs/**",
             "/swagger-resources/**",
@@ -63,12 +61,16 @@ public class SecurityConfiguration {
                     req
                             .requestMatchers("/").permitAll()
                             .requestMatchers(WHITE_LIST_URL).permitAll()
-                            .requestMatchers("/api/v1/management/**").hasAnyRole(admin.name())
-                            .requestMatchers("/admin").hasAnyAuthority(admin.name())
+                            .requestMatchers("/api/v1/admin/**").hasAnyRole(admin.name())
+                            .requestMatchers("/api/v1/product/**").permitAll()
+                            .requestMatchers("/api/v1/admin/product/**").hasAnyAuthority(admin.name())
+                            .requestMatchers("/api/v1/admin/account/**").hasAnyAuthority(admin.name())
+
                             .requestMatchers("/user").hasAnyAuthority(user.name())
                             .requestMatchers("/dashboard").hasAnyAuthority(user.name())
                             .anyRequest().authenticated();
                 })
+                .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin(form -> form
                         .loginPage("/login")
