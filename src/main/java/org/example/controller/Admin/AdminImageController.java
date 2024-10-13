@@ -1,9 +1,9 @@
 package org.example.controller.Admin;
 
 import org.example.entity.Image;
-import org.example.entity.Product; // Import Product entity
+import org.example.entity.Product;
 import org.example.service.IImageService;
-import org.example.service.IProductService; // Import product service
+import org.example.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,26 +38,24 @@ public class AdminImageController {
 
     @PostMapping
     public ResponseEntity<Image> createImage(@RequestBody Image image) {
-        // Lấy Product từ ProductID trong image
         Product product = productService.getProductById(image.getProduct().getProductID());
         if (product == null) {
-            return ResponseEntity.badRequest().build(); // Trả về lỗi nếu không tìm thấy product
+            return ResponseEntity.badRequest().build();
         }
 
-        image.setProduct(product); // Thiết lập Product cho Image
+        image.setProduct(product);
         Image createdImage = imageService.createImage(image);
         return ResponseEntity.ok(createdImage);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Image> updateImage(@PathVariable Integer id, @RequestBody Image imageDetails) {
-        // Tương tự như trên, tìm Product theo ProductID
         Product product = productService.getProductById(imageDetails.getProduct().getProductID());
         if (product == null) {
-            return ResponseEntity.badRequest().build(); // Trả về lỗi nếu không tìm thấy product
+            return ResponseEntity.badRequest().build();
         }
 
-        imageDetails.setProduct(product); // Thiết lập Product cho Image
+        imageDetails.setProduct(product);
         Image updatedImage = imageService.updateImage(id, imageDetails);
         if (updatedImage != null) {
             return ResponseEntity.ok(updatedImage);
@@ -72,3 +70,13 @@ public class AdminImageController {
         return ResponseEntity.noContent().build();
     }
 }
+
+//testapi
+//{
+//    "imageURL": "http://examp22232e.com/image1.jpg",
+//        "product": {
+//    "productID": 3
+//},
+//    "status": "Disable"
+//}
+
