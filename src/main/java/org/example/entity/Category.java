@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.example.entity.enums.Status;
 
+import java.util.List;
+
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,4 +25,7 @@ public class Category {
     @Enumerated(EnumType.STRING)
     @Column(name = "Status", nullable = false)
     protected Status status;
+
+    @OneToMany(mappedBy = "categoryID", fetch = FetchType.LAZY)
+    private List<Discount> discounts;
 }

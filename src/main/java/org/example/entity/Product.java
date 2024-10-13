@@ -53,4 +53,6 @@ public class Product {
     @Enumerated(EnumType.STRING)
     @Column(name = "Status", nullable = false)
     protected Status status;
+
+
 }
