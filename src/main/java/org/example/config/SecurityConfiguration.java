@@ -65,6 +65,11 @@ public class SecurityConfiguration {
                             .requestMatchers("/api/v1/admin/product/**").hasAnyAuthority(admin.name())
                             .requestMatchers("/api/v1/admin/news/**").hasAnyAuthority(admin.name())
                             .requestMatchers("/api/v1/admin/account/**").hasAnyAuthority(admin.name())
+                            .requestMatchers("/api/v1/admin/origin/**").hasAnyAuthority(admin.name())
+                            .requestMatchers("/api/v1/admin/productsize/**").hasAnyAuthority(admin.name())
+                            .requestMatchers("/api/v1/admin/producttype/**").hasAnyAuthority(admin.name())
+                            .requestMatchers("/api/v1/admin/review/**").hasAnyAuthority(admin.name())
+                            .requestMatchers("/api/v1/admin/size/**").hasAnyAuthority(admin.name())
 
                             .requestMatchers("/user").hasAnyAuthority(user.name())
                             .requestMatchers("/dashboard").hasAnyAuthority(user.name())
