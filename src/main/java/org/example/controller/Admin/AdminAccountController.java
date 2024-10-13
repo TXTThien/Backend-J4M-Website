@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1/account/admin")
+@RequestMapping("/api/v1/admin/account")
 @RequiredArgsConstructor
 public class AdminAccountController {
     private final AccountRepository accountRepository;

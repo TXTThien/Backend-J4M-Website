@@ -61,9 +61,9 @@ public class SecurityConfiguration {
                     req
                             .requestMatchers("/").permitAll()
                             .requestMatchers(WHITE_LIST_URL).permitAll()
-                            .requestMatchers("/api/v1/admin/**").hasAnyRole(admin.name())
                             .requestMatchers("/api/v1/product/**").permitAll()
                             .requestMatchers("/api/v1/admin/product/**").hasAnyAuthority(admin.name())
+                            .requestMatchers("/api/v1/admin/news/**").hasAnyAuthority(admin.name())
                             .requestMatchers("/api/v1/admin/account/**").hasAnyAuthority(admin.name())
 
                             .requestMatchers("/user").hasAnyAuthority(user.name())
