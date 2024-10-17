@@ -29,4 +29,9 @@ public class BillInfoServiceImpl implements IBillInfoService {
     public void deleteBillInfo(Integer billInfoId) {
         billInfoRepository.deleteById(billInfoId);
     }
+
+    @Override
+    public List<BillInfo> findBillInfoByAccountID(int id) {
+        return billInfoRepository.findBillInfoByBillID_AccountID_AccountID(id);
+    }
 }

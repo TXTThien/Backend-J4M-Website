@@ -9,6 +9,8 @@ import org.example.repository.ReviewRepository;
 import org.example.service.IReviewService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ReviewServiceImpl implements IReviewService {
@@ -44,5 +46,10 @@ public class ReviewServiceImpl implements IReviewService {
             return reviewRepository.save(newReview);
         }
         return null;
+    }
+
+    @Override
+    public List<Review> findReviewByAccountID(int id) {
+        return reviewRepository.findReviewsByAccountID_AccountID(id);
     }
 }

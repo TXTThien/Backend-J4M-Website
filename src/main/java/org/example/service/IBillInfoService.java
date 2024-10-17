@@ -9,4 +9,6 @@ public interface IBillInfoService {
     List<BillInfo> getAllBillInfos();
     Optional<BillInfo> getBillInfoById(Integer billInfoId);
     void deleteBillInfo(Integer billInfoId);
+
+    List<BillInfo>findBillInfoByAccountID (int id);
 }

@@ -14,7 +14,6 @@ import org.example.service.IProductService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -73,4 +72,28 @@ public class ProductServiceImpl implements IProductService {
     public Product getProductById(Integer id) {
         return productRepository.findById(id).orElse(null);
     }
+
+
+
+    @Override
+    public List<Product> findByBrand(String brand) {
+        return productRepository.findProductsByBrandIDBrandName(brand);
+    }
+
+    @Override
+    public List<Product> findByCategory(String category) {
+        return productRepository.findProductsByProductTypeCategoryIDCategoryName(category);
+    }
+
+    @Override
+    public List<Product> findByProductType(String producttype) {
+        return productRepository.findProductsByProductTypeTypeName(producttype);
+    }
+
+    @Override
+    public List<Product> findByTitle(String title) {
+        return productRepository.findProductsByTitleContaining(title);
+    }
+
+
 }

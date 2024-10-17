@@ -43,8 +43,8 @@ public class SecurityConfiguration {
             "/webjars/**",
             "/swagger-ui.html",
             "/resources/**",
-            "/j4m/**"
-
+            "/j4m/**",
+            "/search/**",
     };
 
     private final JwtAuthenticationFilter jwtAuthFilter;
@@ -70,6 +70,7 @@ public class SecurityConfiguration {
                             .requestMatchers("/api/v1/admin/producttype/**").hasAnyAuthority(admin.name())
                             .requestMatchers("/api/v1/admin/review/**").hasAnyAuthority(admin.name())
                             .requestMatchers("/api/v1/admin/size/**").hasAnyAuthority(admin.name())
+                            .requestMatchers("/account/**").hasAnyAuthority(user.name())
 
                             .requestMatchers("/user").hasAnyAuthority(user.name())
                             .requestMatchers("/dashboard").hasAnyAuthority(user.name())

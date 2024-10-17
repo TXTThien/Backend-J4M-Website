@@ -26,11 +26,10 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
     @Query("SELECT a.email FROM Account a WHERE a.username = :username")
     String findEmailByUsername(@Param("username") String username);
 
-
     @Transactional
     @Modifying
-    @Query("UPDATE Account a SET a.name = :name, a.phoneNumber = :phoneNumber, a.address = :address WHERE a.accountID = :accountID")
-    void updateAddressEmailPhoneNumberAccount(@Param("name") String name, @Param("phoneNumber") String phoneNumber, @Param("address") String address, @Param("accountID") int accountID);
+    @Query("UPDATE Account a SET a.name = :name, a.phoneNumber = :phoneNumber, a.address = :address, a.email = :email WHERE a.accountID = :accountID")
+    void updateAddressEmailPhoneNumberNameAccount(@Param("name") String name, @Param("phoneNumber") String phoneNumber, @Param("address") String address, @Param("email") String email, @Param("accountID") int accountID);
 
     @Transactional
     @Modifying
