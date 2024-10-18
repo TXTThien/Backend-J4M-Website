@@ -1,8 +1,7 @@
-package org.example.controller.User;
+package org.example.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.entity.Product;
-import org.example.repository.ProductRepository;
 import org.example.service.IProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +14,9 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/product")
+@RequestMapping("/product")
 @RequiredArgsConstructor
-public class UserProductController {
+public class ProductController {
 
     private final IProductService productService;
 

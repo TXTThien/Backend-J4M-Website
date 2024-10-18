@@ -76,23 +76,23 @@ public class ProductServiceImpl implements IProductService {
 
 
     @Override
-    public List<Product> findByBrand(String brand) {
-        return productRepository.findProductsByBrandIDBrandName(brand);
+    public List<Product> findByBrand(String brand, Status status) {
+        return productRepository.findProductsByBrandIDBrandNameAndStatus(brand,status);
     }
 
     @Override
-    public List<Product> findByCategory(String category) {
-        return productRepository.findProductsByProductTypeCategoryIDCategoryName(category);
+    public List<Product> findByCategory(String category, Status status) {
+        return productRepository.findProductsByProductTypeCategoryIDCategoryNameAndStatus(category,status);
     }
 
     @Override
-    public List<Product> findByProductType(String producttype) {
-        return productRepository.findProductsByProductTypeTypeName(producttype);
+    public List<Product> findByProductType(String producttype, Status status) {
+        return productRepository.findProductsByProductTypeTypeNameAndStatus(producttype,status);
     }
 
     @Override
-    public List<Product> findByTitle(String title) {
-        return productRepository.findProductsByTitleContaining(title);
+    public List<Product> findByTitle(String title, Status status) {
+        return productRepository.findProductsByTitleContainingAndStatus(title, status);
     }
 
 

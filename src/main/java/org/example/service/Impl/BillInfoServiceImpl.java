@@ -2,6 +2,7 @@ package org.example.service.Impl;
 
 import lombok.RequiredArgsConstructor;
 import org.example.entity.BillInfo;
+import org.example.entity.enums.Status;
 import org.example.repository.BillInfoRepository;
 import org.example.service.IBillInfoService;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class BillInfoServiceImpl implements IBillInfoService {
     }
 
     @Override
-    public List<BillInfo> findBillInfoByAccountID(int id) {
-        return billInfoRepository.findBillInfoByBillID_AccountID_AccountID(id);
+    public List<BillInfo> findBillInfoByAccountID(int id, Status status) {
+        return billInfoRepository.findBillInfoByBillID_AccountID_AccountIDAndStatus(id, status);
     }
 }

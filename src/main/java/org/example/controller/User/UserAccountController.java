@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.entity.Account;
 import org.example.entity.BillInfo;
 import org.example.entity.Review;
+import org.example.entity.enums.Status;
 import org.example.repository.AccountRepository;
 import org.example.service.IAccountService;
 import org.example.service.IBillInfoService;
@@ -47,8 +48,8 @@ public class UserAccountController {
     @GetMapping("/bought")
     public ResponseEntity<Map<String, Object>> getHistoryBought() {
         int idAccount = getIDAccountService.common();
-        List<BillInfo> billInfo = billInfoService.findBillInfoByAccountID(idAccount);
-        List<Review> review = reviewService.findReviewByAccountID(idAccount);
+        List<BillInfo> billInfo = billInfoService.findBillInfoByAccountID(idAccount, Status.Enable);
+        List<Review> review = reviewService.findReviewByAccountID(idAccount, Status.Enable);
 
         Map<String, Object> response = new HashMap<>();
         response.put("billInfo", billInfo);
@@ -56,23 +57,40 @@ public class UserAccountController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/updateinfo")
-    public ResponseEntity<String> updateAccountInfo(
+    @PutMapping("/updateinfo")
+    public ResponseEntity<String> updateAccountByAccountID(
             @RequestBody Account updateAccountRequest) {
-
         int idAccount = getIDAccountService.common();
-        accountService.updateAccountInfo(
-                updateAccountRequest.getName(),
-                updateAccountRequest.getPhoneNumber(),
-                updateAccountRequest.getAddress(),
-                updateAccountRequest.getEmail(),
-                idAccount
-        );
-        return ResponseEntity.ok("Cập nhật thông tin tài khoản thành công.");
 
+
+        Account currentAccount = accountRepository.findAccountByAccountID(idAccount);
+
+        if (currentAccount == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tài khoản không tồn tại.");
+        }
+
+        if (updateAccountRequest.getName() != null) {
+            currentAccount.setName(updateAccountRequest.getName());
+        }
+        if (updateAccountRequest.getPhoneNumber() != null) {
+            currentAccount.setPhoneNumber(updateAccountRequest.getPhoneNumber());
+        }
+        if (updateAccountRequest.getAddress() != null) {
+            currentAccount.setAddress(updateAccountRequest.getAddress());
+        }
+        if (updateAccountRequest.getEmail() != null) {
+            currentAccount.setEmail(updateAccountRequest.getEmail());
+        }
+
+        // Cập nhật tài khoản trong cơ sở dữ liệu
+        accountService.updateAccountInfo(currentAccount);
+
+        return ResponseEntity.ok("Cập nhật thông tin tài khoản thành công.");
     }
 
-    @PostMapping("/changepassword")
+
+
+    @PutMapping("/changepassword")
     public ResponseEntity<String> updateChangePassword(
             @RequestParam("newpass") String newpass,
             @RequestParam("conpass") String conpass) {

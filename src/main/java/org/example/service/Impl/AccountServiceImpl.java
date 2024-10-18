@@ -97,8 +97,10 @@ public class AccountServiceImpl implements IAccountService {
     }
 
     @Override
-    public void updateAccountInfo(String nameUpdate, String phonenumberUpdate, String addressUpdate, String emailUpdate, int idAccount) {
-        accountRepository.updateAddressEmailPhoneNumberNameAccount(nameUpdate, phonenumberUpdate, addressUpdate, emailUpdate, idAccount);
+    public void updateAccountInfo(Account account) {
+        accountRepository.save(account);
     }
+
+
 
 }

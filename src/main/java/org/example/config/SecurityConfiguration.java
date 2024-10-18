@@ -43,6 +43,7 @@ public class SecurityConfiguration {
             "/webjars/**",
             "/swagger-ui.html",
             "/resources/**",
+            "/product/**",
             "/j4m/**",
             "/search/**",
     };
@@ -61,19 +62,19 @@ public class SecurityConfiguration {
                     req
                             .requestMatchers("/").permitAll()
                             .requestMatchers(WHITE_LIST_URL).permitAll()
-                            .requestMatchers("/api/v1/product/**").permitAll()
-                            .requestMatchers("/api/v1/admin/product/**").hasAnyAuthority(admin.name())
-                            .requestMatchers("/api/v1/admin/news/**").hasAnyAuthority(admin.name())
-                            .requestMatchers("/api/v1/admin/account/**").hasAnyAuthority(admin.name())
-                            .requestMatchers("/api/v1/admin/origin/**").hasAnyAuthority(admin.name())
-                            .requestMatchers("/api/v1/admin/productsize/**").hasAnyAuthority(admin.name())
-                            .requestMatchers("/api/v1/admin/producttype/**").hasAnyAuthority(admin.name())
-                            .requestMatchers("/api/v1/admin/review/**").hasAnyAuthority(admin.name())
-                            .requestMatchers("/api/v1/admin/size/**").hasAnyAuthority(admin.name())
-                            .requestMatchers("/account/**").hasAnyAuthority(user.name())
-
-                            .requestMatchers("/user").hasAnyAuthority(user.name())
-                            .requestMatchers("/dashboard").hasAnyAuthority(user.name())
+                            .requestMatchers("/api/v1/admin/product/**").hasAuthority(admin.name())
+                            .requestMatchers("/api/v1/admin/bill/**").hasAuthority(admin.name())
+                            .requestMatchers("/api/v1/admin/news/**").hasAuthority(admin.name())
+                            .requestMatchers("/api/v1/admin/account/**").hasAuthority(admin.name())
+                            .requestMatchers("/api/v1/admin/origin/**").hasAuthority(admin.name())
+                            .requestMatchers("/api/v1/admin/productsize/**").hasAuthority(admin.name())
+                            .requestMatchers("/api/v1/admin/producttype/**").hasAuthority(admin.name())
+                            .requestMatchers("/api/v1/admin/review/**").hasAuthority(admin.name())
+                            .requestMatchers("/api/v1/admin/size/**").hasAuthority(admin.name())
+                            .requestMatchers("/account/**").hasAuthority(admin.name())
+                            .requestMatchers("/review/**").hasAuthority(admin.name())
+                            .requestMatchers("/user").hasAuthority(admin.name())
+                            .requestMatchers("/dashboard").hasAuthority(admin.name())
                             .anyRequest().authenticated();
                 })
                 .authenticationProvider(authenticationProvider)
@@ -93,5 +94,6 @@ public class SecurityConfiguration {
 
         return http.build();
     }
+
 
 }

@@ -13,12 +13,12 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     List<Product> findProductByStatusOrderByProductIDDesc(Status status);
 
-    List<Product> findProductsByTitleContaining(String title);
+    List<Product> findProductsByTitleContainingAndStatus(String title , Status status);
 
-    List<Product> findProductsByBrandIDBrandName(String brand);
+    List<Product> findProductsByBrandIDBrandNameAndStatus(String brand, Status status);
 
-    List<Product> findProductsByProductTypeCategoryIDCategoryName(String Category);
+    List<Product> findProductsByProductTypeCategoryIDCategoryNameAndStatus(String Category , Status status);
 
-    List<Product> findProductsByProductTypeTypeName(String ProductType);
+    List<Product> findProductsByProductTypeTypeNameAndStatus(String ProductType , Status status);
 
 }

@@ -49,7 +49,12 @@ public class ReviewServiceImpl implements IReviewService {
     }
 
     @Override
-    public List<Review> findReviewByAccountID(int id) {
-        return reviewRepository.findReviewsByAccountID_AccountID(id);
+    public List<Review> findReviewByAccountID(int id, Status status) {
+        return reviewRepository.findReviewsByAccountID_AccountIDAndStatus(id,status);
+    }
+
+    @Override
+    public Review findReviewByAccountIDAndProduct(int id, int product, Status status) {
+        return reviewRepository.findReviewsByAccountID_AccountIDAndProductID_ProductIDAndStatus(id, product, status);
     }
 }
