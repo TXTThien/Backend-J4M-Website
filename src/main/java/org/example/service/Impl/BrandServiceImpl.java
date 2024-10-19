@@ -41,8 +41,19 @@ public class BrandServiceImpl implements IBrandService {
     }
 
     @Override
-    public void deleteBrand(Integer id) {
-        brandRepository.deleteById(id);
+    public void updateBrandStatus(Brand brand) {
+        brandRepository.save(brand);
     }
+
+    @Override
+    public void deleteBrand(Integer id) {
+        Optional<Brand> brandOptional = brandRepository.findById(id);
+        if (brandOptional.isPresent()) {
+            Brand brand = brandOptional.get();
+            brand.setStatus(Status.Disable); // Cập nhật trạng thái thành DISABLE
+            brandRepository.save(brand); // Lưu lại thay đổi
+        }
+    }
+
 
 }

@@ -6,6 +6,7 @@ import org.example.service.IBillInfoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.example.entity.enums.Status;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,10 +30,13 @@ public class AdminBillInfoController {
     public ResponseEntity<?> deleteBillInfo(@PathVariable("id") Integer id) {
         Optional<BillInfo> billInfoOptional = billInfoService.getBillInfoById(id);
         if (billInfoOptional.isPresent()) {
-            billInfoService.deleteBillInfo(id);
+            BillInfo billInfo = billInfoOptional.get();
+            billInfo.setStatus(Status.Disable); // Chuyển trạng thái thành Disable
+            billInfoService.updateBillInfo(billInfo); // Cập nhật BillInfo trong cơ sở dữ liệu
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Bill info not found");
         }
     }
+
 }

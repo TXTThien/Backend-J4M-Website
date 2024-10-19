@@ -6,6 +6,8 @@ import org.example.service.IBillService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.example.entity.enums.Status;
+
 
 import java.util.List;
 import java.util.Map;
@@ -43,12 +45,15 @@ public class AdminBillController {
     public ResponseEntity<?> deleteBill(@PathVariable("id") Integer id) {
         Optional<Bill> billOptional = billService.getBillById(id);
         if (billOptional.isPresent()) {
-            billService.deleteBill(id);
+            Bill bill = billOptional.get();
+            bill.setStatus(Status.Disable); // Chuyển trạng thái của bill thành Disable
+            billService.updateBill(bill); // Cập nhật bill trong cơ sở dữ liệu
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Bill not found");
         }
     }
+
 }
 //test api
 // {

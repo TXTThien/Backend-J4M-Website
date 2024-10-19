@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.example.entity.enums.Role.*;
+import static org.springframework.security.config.Customizer.withDefaults;
 import static org.springframework.security.config.http.SessionCreationPolicy.ALWAYS;
 
 @Configuration
@@ -57,17 +58,31 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(withDefaults())
                 .authorizeHttpRequests(req -> {
                     req
                             .requestMatchers("/").permitAll()
                             .requestMatchers(WHITE_LIST_URL).permitAll()
-                            .requestMatchers("/api/v1/product/**").permitAll()
-                            .requestMatchers("/api/v1/admin/product/**").hasAnyAuthority(admin.name())
-                            .requestMatchers("/api/v1/admin/news/**").hasAnyAuthority(admin.name())
-                            .requestMatchers("/api/v1/admin/account/**").hasAnyAuthority(admin.name())
-
-                            .requestMatchers("/user").hasAnyAuthority(user.name())
-                            .requestMatchers("/dashboard").hasAnyAuthority(user.name())
+                            .requestMatchers("/api/v1/admin/product/**").hasAuthority(admin.name())
+                            .requestMatchers("/api/v1/admin/bill/**").hasAuthority(admin.name())
+                            .requestMatchers("/api/v1/admin/billinfo/**").hasAuthority(admin.name())
+                            .requestMatchers("/api/v1/admin/brand/**").hasAuthority(admin.name())
+                            .requestMatchers("/api/v1/admin/cart/**").hasAuthority(admin.name())
+                            .requestMatchers("/api/v1/admin/category/**").hasAuthority(admin.name())
+                            .requestMatchers("/api/v1/admin/discount/**").hasAuthority(admin.name())
+                            .requestMatchers("/api/v1/admin/image**").hasAuthority(admin.name())
+                            .requestMatchers("/api/v1/admin/news/**").hasAuthority(admin.name())
+                            .requestMatchers("/api/v1/admin/account/**").hasAuthority(admin.name())
+                            .requestMatchers("/api/v1/admin/origin/**").hasAuthority(admin.name())
+                            .requestMatchers("/api/v1/admin/banner/**").hasAuthority(admin.name())
+                            .requestMatchers("/api/v1/admin/productsize/**").hasAuthority(admin.name())
+                            .requestMatchers("/api/v1/admin/producttype/**").hasAuthority(admin.name())
+                            .requestMatchers("/api/v1/admin/review/**").hasAuthority(admin.name())
+                            .requestMatchers("/api/v1/admin/size/**").hasAuthority(admin.name())
+                            .requestMatchers("/account/**").hasAuthority(admin.name())
+                            .requestMatchers("/review/**").hasAuthority(admin.name())
+                            .requestMatchers("/user").hasAuthority(admin.name())
+                            .requestMatchers("/dashboard").hasAuthority(admin.name())
                             .anyRequest().authenticated();
                 })
                 .authenticationProvider(authenticationProvider)
@@ -87,5 +102,6 @@ public class SecurityConfiguration {
 
         return http.build();
     }
+
 
 }

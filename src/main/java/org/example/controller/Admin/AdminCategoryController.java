@@ -5,6 +5,7 @@ import org.example.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.example.entity.enums.Status;
 
 import java.util.List;
 
@@ -49,9 +50,17 @@ public class AdminCategoryController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCategory(@PathVariable Integer id) {
-        categoryService.deleteCategory(id);
+        Category category = categoryService.getCategoryById(id);
+        if (category == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        category.setStatus(Status.Disable);
+        categoryService.updateCategory(id, category);
+
         return ResponseEntity.noContent().build();
     }
+
 }
 
 //test api

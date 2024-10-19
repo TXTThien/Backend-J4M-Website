@@ -9,6 +9,9 @@ import org.example.service.IBannerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.example.entity.enums.Status;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/admin/banner")
@@ -19,6 +22,15 @@ public class AdminBannerController {
     private final ProductRepository productRepository;
     private final ProductTypeRepository productTypeRepository;
     private final CategoryRepository categoryRepository;
+
+    @GetMapping
+    public List<Banner> getAllBanners() {
+        List<Banner> banners = bannerService.findAll();
+        if (banners.isEmpty()) {
+        }
+        return banners;
+    }
+
 
     @PostMapping
     public ResponseEntity<?> createBanner(@RequestBody Banner banner) {
@@ -49,10 +61,7 @@ public class AdminBannerController {
         return ResponseEntity.ok(banner);
     }
 
-    @GetMapping
-    public ResponseEntity<?> getAllBanners() {
-        return ResponseEntity.ok(bannerService.findAll());
-    }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateBanner(@PathVariable Integer id, @RequestBody Banner banner) {
@@ -90,11 +99,16 @@ public class AdminBannerController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBanner(@PathVariable Integer id) {
-        if (bannerService.delete(id)) {
-            return ResponseEntity.noContent().build();
+        Banner existingBanner = bannerService.findById(id);
+        if (existingBanner == null) {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
+        // Thay đổi trạng thái của banner thành Disable
+        existingBanner.setStatus(Status.Disable);
+        bannerService.update(existingBanner);
+        return ResponseEntity.noContent().build();
     }
+
 }
 //test api
 //{

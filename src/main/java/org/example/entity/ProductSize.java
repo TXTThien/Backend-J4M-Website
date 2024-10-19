@@ -1,5 +1,6 @@
 package org.example.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.example.entity.enums.Status;
@@ -19,6 +20,7 @@ public class ProductSize {
 
     @ManyToOne
     @JoinColumn(name = "ProductID",nullable = false)
+    @JsonManagedReference
     private Product productID;
 
     @ManyToOne
@@ -31,6 +33,5 @@ public class ProductSize {
     @Enumerated(EnumType.STRING)
     @Column(name = "Status", nullable = false)
     protected Status status;
-
 
 }

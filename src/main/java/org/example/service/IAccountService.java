@@ -24,4 +24,5 @@ public interface IAccountService {
     Account updateAccount(Integer accountId,  @Valid RegisterRequestForAdmin newAccountRequest);
     void deleteAccount (Integer id);
 
+    void updateAccountInfo(Account account);
 }

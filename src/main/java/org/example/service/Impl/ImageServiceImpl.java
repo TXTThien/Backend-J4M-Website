@@ -5,6 +5,7 @@ import org.example.repository.ImageRepository;
 import org.example.service.IImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.example.entity.enums.Status;
 
 import java.util.List;
 import java.util.Optional;
@@ -59,5 +60,15 @@ public class ImageServiceImpl implements IImageService {
     @Override
     public void deleteImage(Integer id) {
         imageRepository.deleteById(id);
+    }
+
+    @Override
+    public void disableImage(Integer id) {
+        Optional<Image> optionalImage = imageRepository.findById(id);
+        if (optionalImage.isPresent()) {
+            Image image = optionalImage.get();
+            image.setStatus(Status.Disable); // Chuyển trạng thái thành Disable
+            imageRepository.save(image); // Lưu thay đổi
+        }
     }
 }

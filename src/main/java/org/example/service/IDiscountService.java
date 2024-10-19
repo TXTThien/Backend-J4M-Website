@@ -10,4 +10,5 @@ public interface IDiscountService {
     Discount createDiscount(Discount discount);
     Discount updateDiscount(Integer id, Discount discountDetails);
     void deleteDiscount(Integer id);
+
 }
