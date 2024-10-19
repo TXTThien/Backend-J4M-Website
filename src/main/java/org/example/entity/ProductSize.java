@@ -1,6 +1,10 @@
 package org.example.entity;
 
+<<<<<<< HEAD
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+=======
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+>>>>>>> main
 import jakarta.persistence.*;
 import lombok.*;
 import org.example.entity.enums.Status;
@@ -10,6 +14,7 @@ import org.example.entity.enums.Status;
 @NoArgsConstructor
 @Getter
 @Setter
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity(name = "ProductSize")
 @Table(name = "productsize", schema = "shopaonam")
 public class ProductSize {

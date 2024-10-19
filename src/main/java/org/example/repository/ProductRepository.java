@@ -4,6 +4,8 @@ import org.example.entity.Brand;
 import org.example.entity.Product;
 import org.example.entity.enums.Status;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,4 +23,26 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     List<Product> findProductsByProductTypeTypeNameAndStatus(String ProductType , Status status);
 
+<<<<<<< HEAD
 }
+=======
+    @Query("SELECT p FROM ProductSize ps " +
+            "JOIN Product p ON ps.productID = p " +
+            "JOIN Size s ON ps.sizeID = s " +
+            "JOIN Brand b ON p.brandID = b " +
+            "JOIN Origin o ON p.originID = o " +
+            "JOIN ProductType pt ON p.productType = pt " +
+            "JOIN Category c ON pt.categoryID = c " +
+            "WHERE (COALESCE(:originid, 0) = 0 OR o.originID = :originid) " +
+            "AND (COALESCE(:sizeid, 0) = 0 OR s.sizeID = :sizeid) " +
+            "AND (COALESCE(:categoryid, 0) = 0 OR c.categoryID = :categoryid) " +
+            "AND (COALESCE(:producttypeid, 0) = 0 OR pt.productTypeID = :producttypeid) " +
+            "AND (COALESCE(:brandid, 0) = 0 OR b.brandID = :brandid)"+
+            "AND p.status = 'Enable' ")
+    List<Product> sortProduct(@Param("originid") Integer originid,
+                              @Param("sizeid") Integer sizeid,
+                              @Param("categoryid") Integer categoryid,
+                              @Param("producttypeid") Integer producttypeid,
+                              @Param("brandid") Integer brandid);
+}
+>>>>>>> main

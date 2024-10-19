@@ -57,7 +57,6 @@ public class Account implements UserDetails {
     @Column(name = "Otp", length = 6)
     private String otp;
 
-    // Thời gian hết hạn của mã OTP
     @Column(name = "OtpExpiry")
     private LocalDateTime otpExpiry;
 

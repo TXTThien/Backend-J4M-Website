@@ -12,4 +12,8 @@ public interface IReviewService {
     List<Review> findReviewByAccountID(int id, Status status);
 
     Review findReviewByAccountIDAndProduct (int id, int product, Status status);
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> main

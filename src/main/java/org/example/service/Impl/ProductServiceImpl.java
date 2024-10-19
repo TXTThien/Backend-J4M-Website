@@ -1,10 +1,7 @@
 package org.example.service.Impl;
 
 import lombok.RequiredArgsConstructor;
-import org.example.entity.Brand;
-import org.example.entity.Origin;
-import org.example.entity.Product;
-import org.example.entity.ProductType;
+import org.example.entity.*;
 import org.example.entity.enums.Status;
 import org.example.repository.BrandRepository;
 import org.example.repository.OriginRepository;
@@ -91,9 +88,21 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
+<<<<<<< HEAD
+=======
+    public List<Product> sortProduct(int origin, int size, int category, int productType, int brand) {
+        return productRepository.sortProduct(origin,size,category,productType,brand);
+    }
+
+    @Override
+>>>>>>> main
     public List<Product> findByTitle(String title, Status status) {
         return productRepository.findProductsByTitleContainingAndStatus(title, status);
     }
 
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> main

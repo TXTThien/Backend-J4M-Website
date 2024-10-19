@@ -45,6 +45,7 @@ public class BrandServiceImpl implements IBrandService {
         brandRepository.save(brand);
     }
 
+<<<<<<< HEAD
     @Override
     public void deleteBrand(Integer id) {
         Optional<Brand> brandOptional = brandRepository.findById(id);
@@ -54,6 +55,8 @@ public class BrandServiceImpl implements IBrandService {
             brandRepository.save(brand); // Lưu lại thay đổi
         }
     }
+=======
+>>>>>>> main
 
 
 }

@@ -1,6 +1,7 @@
 package org.example.config;
 
 import jakarta.servlet.DispatcherType;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.example.config.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher.Builder;
+import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 
@@ -44,8 +46,9 @@ public class SecurityConfiguration {
             "/webjars/**",
             "/swagger-ui.html",
             "/resources/**",
-            "/j4m/**"
-
+            "/product/**",
+            "/j4m/**",
+            "/search/**",
     };
 
     private final JwtAuthenticationFilter jwtAuthFilter;
@@ -57,14 +60,35 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .cors(cors -> cors
+                        .configurationSource(request -> {
+                            CorsConfiguration config = new CorsConfiguration();
+                            config.setAllowedOrigins(List.of("http://localhost:8000"));
+                            config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                            config.setAllowedHeaders(List.of("*"));
+                            config.setExposedHeaders(List.of("Authorization"));
+                            config.setAllowCredentials(true);
+                            config.setMaxAge(3600L);
+                            return config;
+                        })
+                )
                 .csrf(AbstractHttpConfigurer::disable)
+<<<<<<< HEAD
                 .cors(withDefaults())
+=======
+                .exceptionHandling(e -> e
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access Denied");
+                        })
+                )
+>>>>>>> main
                 .authorizeHttpRequests(req -> {
                     req
                             .requestMatchers("/").permitAll()
                             .requestMatchers(WHITE_LIST_URL).permitAll()
                             .requestMatchers("/api/v1/admin/product/**").hasAuthority(admin.name())
                             .requestMatchers("/api/v1/admin/bill/**").hasAuthority(admin.name())
+<<<<<<< HEAD
                             .requestMatchers("/api/v1/admin/billinfo/**").hasAuthority(admin.name())
                             .requestMatchers("/api/v1/admin/brand/**").hasAuthority(admin.name())
                             .requestMatchers("/api/v1/admin/cart/**").hasAuthority(admin.name())
@@ -75,6 +99,11 @@ public class SecurityConfiguration {
                             .requestMatchers("/api/v1/admin/account/**").hasAuthority(admin.name())
                             .requestMatchers("/api/v1/admin/origin/**").hasAuthority(admin.name())
                             .requestMatchers("/api/v1/admin/banner/**").hasAuthority(admin.name())
+=======
+                            .requestMatchers("/api/v1/admin/news/**").hasAuthority(admin.name())
+                            .requestMatchers("/api/v1/admin/account/**").hasAuthority(admin.name())
+                            .requestMatchers("/api/v1/admin/origin/**").hasAuthority(admin.name())
+>>>>>>> main
                             .requestMatchers("/api/v1/admin/productsize/**").hasAuthority(admin.name())
                             .requestMatchers("/api/v1/admin/producttype/**").hasAuthority(admin.name())
                             .requestMatchers("/api/v1/admin/review/**").hasAuthority(admin.name())
@@ -104,4 +133,8 @@ public class SecurityConfiguration {
     }
 
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> main

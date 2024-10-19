@@ -1,6 +1,7 @@
 package org.example.service;
 
 import org.example.entity.Brand;
+import org.example.entity.Product;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,6 +12,9 @@ public interface IBrandService {
     Brand createBrand(Brand brand);
     Brand updateBrand(Integer id, Brand updatedBrand);
     void deleteBrand(Integer id);
+<<<<<<< HEAD
     void updateBrandStatus(Brand brand);
+=======
+>>>>>>> main
 
 }

@@ -71,4 +71,8 @@ public class AdminOriginController {
             return ResponseEntity.notFound().build();
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> main
