@@ -1,7 +1,6 @@
 package org.example.service;
 
-import org.example.entity.Brand;
-import org.example.entity.Product;
+import org.example.entity.*;
 import org.example.entity.enums.Status;
 
 import java.util.List;
@@ -20,6 +19,6 @@ public interface IProductService {
     List<Product>findByCategory(String category, Status status);
     List<Product>findByProductType(String producttype, Status status);
 
-
+    List<Product> sortProduct (int origin, int size, int category, int productType, int brand);
     List<Product> findByTitle(String title, Status status);
 }
