@@ -40,7 +40,18 @@ public class BillServiceImpl implements IBillService {
     }
 
     @Override
-    public void deleteBill(Integer billId) {
-        billRepository.deleteById(billId);
+    public Bill updateBill(Bill bill) {
+        return billRepository.save(bill);
     }
+
+    @Override
+    public void deleteBill(Integer billId) {
+        Optional<Bill> billOptional = billRepository.findById(billId);
+        if (billOptional.isPresent()) {
+            Bill bill = billOptional.get();
+            bill.setStatus(Status.Disable); // Chuyển trạng thái thành Disable
+            billRepository.save(bill); // Lưu lại thay đổi vào cơ sở dữ liệu
+        }
+    }
+
 }

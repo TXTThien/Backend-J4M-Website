@@ -7,6 +7,7 @@ import org.example.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.example.entity.enums.Status;
 
 import java.util.List;
 
@@ -66,9 +67,10 @@ public class AdminImageController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteImage(@PathVariable Integer id) {
-        imageService.deleteImage(id);
+        imageService.disableImage(id); // Gọi phương thức disable thay vì delete
         return ResponseEntity.noContent().build();
     }
+
 }
 
 //testapi

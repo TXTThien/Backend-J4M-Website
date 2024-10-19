@@ -1,5 +1,7 @@
 package org.example.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.example.entity.enums.Status;
@@ -26,6 +28,7 @@ public class Category {
     @Column(name = "Status", nullable = false)
     protected Status status;
 
-    @OneToMany(mappedBy = "categoryID", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "categoryID")
+    @JsonBackReference
     private List<Discount> discounts;
 }

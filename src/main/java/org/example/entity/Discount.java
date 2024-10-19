@@ -1,4 +1,7 @@
 package org.example.entity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.example.entity.enums.Status;
@@ -21,16 +24,15 @@ public class Discount {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CategoryID")
+    @JsonIgnore
     private Category categoryID;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ProductTypeID")
+    @JsonBackReference // Sử dụng JsonBackReference để tránh lỗi tuần hoàn và để ánh xạ đúng từ JSON
     private ProductType productTypeID;
 
-
-
-
-    @Column(name = "Discountpercent",  precision = 5, scale = 2)
+    @Column(name = "Discountpercent", precision = 5, scale = 2)
     private BigDecimal discountPercent;
 
     @Column(name = "start_date", nullable = false)
@@ -41,5 +43,5 @@ public class Discount {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "Status", nullable = false)
-    protected Status status;;
+    protected Status status;
 }

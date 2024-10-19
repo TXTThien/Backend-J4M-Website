@@ -6,6 +6,7 @@ import org.example.service.IBrandService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.example.entity.enums.Status;
 
 import java.util.List;
 import java.util.Optional;
@@ -49,14 +50,17 @@ public class AdminBrandController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBrand(@PathVariable Integer id) {
-        Optional<Brand> brand = brandService.getBrandById(id);
-        if (brand.isPresent()) {
-            brandService.deleteBrand(id);
+        Optional<Brand> brandOptional = brandService.getBrandById(id);
+        if (brandOptional.isPresent()) {
+            Brand brand = brandOptional.get();
+            brand.setStatus(Status.Disable); // Chuyển trạng thái thành DISABLE
+            brandService.updateBrandStatus(brand); // Cập nhật trạng thái của thương hiệu
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
+
 }
 //test api
 //{

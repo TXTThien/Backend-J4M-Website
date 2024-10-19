@@ -25,11 +25,15 @@ public class AdminCartController {
 
     @PostMapping
     public ResponseEntity<Cart> createCart(@RequestBody Cart cart) {
-        if (cart.getProductSizeID() == null) {
-            return ResponseEntity.badRequest().build(); // Hoặc ném một ngoại lệ
+        try {
+            if (cart.getProductSizeID() == null || cart.getAccountID() == null) {
+                return ResponseEntity.badRequest().body(null); // Kiểm tra xem các thuộc tính có null không
+            }
+            Cart createdCart = cartService.createCart(cart);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdCart);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
-        Cart createdCart = cartService.createCart(cart);
-        return ResponseEntity.ok(createdCart);
     }
 
 

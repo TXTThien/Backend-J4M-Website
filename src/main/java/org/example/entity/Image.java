@@ -20,6 +20,7 @@ public class Image {
     @Column(name = "ImageURL", nullable = false)
     private String imageURL;
 
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ProductID", nullable = false)
     private Product product; // Chắc chắn đây là Product, không phải productID

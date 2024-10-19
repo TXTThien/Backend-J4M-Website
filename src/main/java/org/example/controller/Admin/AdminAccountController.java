@@ -29,6 +29,7 @@ public class AdminAccountController {
     private final AccountServiceImpl accountService;
     private final PasswordEncoder passwordEncoder;
 
+
     @GetMapping("")
     public ResponseEntity<?> getListAccount(){
         List<Account> accounts = accountRepository.findAll();

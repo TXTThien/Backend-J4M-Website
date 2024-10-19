@@ -5,6 +5,7 @@ import org.example.repository.DiscountRepository;
 import org.example.service.IDiscountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.example.entity.enums.Status;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,52 +28,33 @@ public class DiscountServiceImpl implements IDiscountService {
 
     @Override
     public Discount createDiscount(Discount discount) {
-        // Kiểm tra nếu CategoryID và ProductTypeID là hợp lệ
-        if (discount.getCategoryID() != null) {
-            discount.setCategoryID(discount.getCategoryID());
-        }
-        if (discount.getProductTypeID() != null) {
-            discount.setProductTypeID(discount.getProductTypeID());
-        }
         return discountRepository.save(discount);
     }
-
 
     @Override
     public Discount updateDiscount(Integer id, Discount discountDetails) {
         Optional<Discount> optionalDiscount = discountRepository.findById(id);
         if (optionalDiscount.isPresent()) {
             Discount discount = optionalDiscount.get();
-
-            // Cập nhật categoryID nếu có giá trị
-            if (discountDetails.getCategoryID() != null) {
-                discount.setCategoryID(discountDetails.getCategoryID());
-            }
-
-            // Cập nhật productTypeID nếu có giá trị
-            if (discountDetails.getProductTypeID() != null) {
-                discount.setProductTypeID(discountDetails.getProductTypeID());
-            }
-
-            // Cập nhật các trường khác
             discount.setDiscountPercent(discountDetails.getDiscountPercent());
             discount.setStartDate(discountDetails.getStartDate());
             discount.setEndDate(discountDetails.getEndDate());
-
-            // Cập nhật status nếu có giá trị
-            if (discountDetails.getStatus() != null) {
-                discount.setStatus(discountDetails.getStatus());
-            }
-
+            discount.setStatus(discountDetails.getStatus());
+            discount.setCategoryID(discountDetails.getCategoryID());
+            discount.setProductTypeID(discountDetails.getProductTypeID());
             return discountRepository.save(discount);
         } else {
-            return null;
+            return null; // hoặc ném ngoại lệ nếu muốn xử lý lỗi
         }
     }
 
-
     @Override
-    public void deleteDiscount(Integer id) {
-        discountRepository.deleteById(id);
+    public void deleteDiscount(Integer discountId) {
+        Optional<Discount> discountOptional = discountRepository.findById(discountId);
+        if (discountOptional.isPresent()) {
+            Discount discount = discountOptional.get();
+            discount.setStatus(Status.Disable); // Chuyển trạng thái thành Disable
+            discountRepository.save(discount); // Lưu lại thay đổi vào cơ sở dữ liệu
+        }
     }
 }

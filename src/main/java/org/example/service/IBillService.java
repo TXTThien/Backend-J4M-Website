@@ -10,4 +10,7 @@ public interface IBillService {
     Optional<Bill> getBillById(Integer billId);
     Bill updateBillPaidStatus(Integer billId, Integer isPaid, String status);
     void deleteBill(Integer billId);
+    Bill updateBill(Bill bill);
+
+
 }

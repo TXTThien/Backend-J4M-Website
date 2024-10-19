@@ -57,4 +57,8 @@ public class ReviewServiceImpl implements IReviewService {
     public Review findReviewByAccountIDAndProduct(int id, int product, Status status) {
         return reviewRepository.findReviewsByAccountID_AccountIDAndProductID_ProductIDAndStatus(id, product, status);
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> main

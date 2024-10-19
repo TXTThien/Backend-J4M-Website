@@ -10,4 +10,6 @@ public interface IImageService {
     Image createImage(Image image);
     Image updateImage(Integer id, Image imageDetails);
     void deleteImage(Integer id);
+    void disableImage(Integer id);
+
 }

@@ -23,6 +23,9 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     List<Product> findProductsByProductTypeTypeNameAndStatus(String ProductType , Status status);
 
+<<<<<<< HEAD
+}
+=======
     @Query("SELECT p FROM ProductSize ps " +
             "JOIN Product p ON ps.productID = p " +
             "JOIN Size s ON ps.sizeID = s " +
@@ -42,3 +45,4 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
                               @Param("producttypeid") Integer producttypeid,
                               @Param("brandid") Integer brandid);
 }
+>>>>>>> main

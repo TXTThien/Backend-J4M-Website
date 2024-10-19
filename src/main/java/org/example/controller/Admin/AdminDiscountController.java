@@ -5,6 +5,7 @@ import org.example.service.IDiscountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.example.entity.enums.Status;
 
 import java.util.List;
 
@@ -49,17 +50,15 @@ public class AdminDiscountController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteDiscount(@PathVariable Integer id) {
-        discountService.deleteDiscount(id);
-        return ResponseEntity.noContent().build();
-    }
-}
-//test api
-//        {
-//                "categoryID": {"categoryID": 1},
-//                "productTypeID": {"productTypeID": 2},
-//                "discountPercent": 12.50,
-//                "startDate": "2024-01-01",
-//                "endDate": "2024-12-31",
-//                "status": "Disable"
-//        }
+        Discount discount = discountService.getDiscountById(id);
+        if (discount == null) {
+            return ResponseEntity.notFound().build(); // Nếu không tìm thấy discount, trả về lỗi 404
+        }
 
+        discount.setStatus(Status.Disable); // Chuyển trạng thái của discount thành Disable
+        discountService.updateDiscount(id, discount); // Cập nhật discount trong cơ sở dữ liệu
+
+        return ResponseEntity.noContent().build(); // Trả về phản hồi không nội dung
+    }
+
+}

@@ -5,6 +5,8 @@ import org.example.repository.BannerRepository;
 import org.example.service.IBannerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.example.entity.enums.Status;
+
 
 import java.util.List;
 
@@ -46,10 +48,11 @@ public class BannerServiceImpl implements IBannerService {
 
     @Override
     public boolean delete(Integer id) {
-        if (bannerRepository.existsById(id)) {
-            bannerRepository.deleteById(id);
+        return bannerRepository.findById(id).map(existingBanner -> {
+            existingBanner.setStatus(Status.Disable);
+            bannerRepository.save(existingBanner);
             return true;
-        }
-        return false;
+        }).orElse(false);
     }
+
 }

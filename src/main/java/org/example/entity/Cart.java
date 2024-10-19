@@ -3,6 +3,7 @@ package org.example.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.example.entity.enums.Status;
@@ -22,15 +23,15 @@ public class Cart {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "AccountID")
-    private Account AccountID;
+    private Account accountID;
 
     @Column(name = "Number", nullable = false)
     private Integer number;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ProductsizeID")
+    @JsonManagedReference
     private ProductSize productSizeID;
-
 
     @Enumerated(EnumType.STRING)
     @Column(name = "Status", nullable = false)

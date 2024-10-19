@@ -1,5 +1,6 @@
 package org.example.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
@@ -7,6 +8,7 @@ import org.aspectj.weaver.ast.Or;
 import org.example.entity.enums.Status;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Builder
 @AllArgsConstructor
@@ -53,6 +55,9 @@ public class Product {
     @Enumerated(EnumType.STRING)
     @Column(name = "Status", nullable = false)
     protected Status status;
+    @OneToMany(mappedBy = "productID")
 
+    @JsonBackReference
+    private List<ProductSize> productSizes;
 
 }

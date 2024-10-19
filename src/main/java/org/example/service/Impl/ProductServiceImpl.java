@@ -32,30 +32,30 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public Product updateProduct(Integer id, Product newProduct) {
-       Product product = productRepository.findById(id).orElse(null);
-       if (product!=null){
-           product.setAvatar(newProduct.getAvatar());
-           product.setTitle(newProduct.getTitle());
-           product.setDescription(newProduct.getDescription());
-           product.setPrice(newProduct.getPrice());
-           product.setMaterial(newProduct.getMaterial());
-           product.setStatus(newProduct.getStatus());
-           if (newProduct.getProductType()!=null && newProduct.getProductType().getProductTypeID()!=null){
-               ProductType productType = productTypeRepository.findById(newProduct.getProductType().getProductTypeID()).orElse(null);
-               product.setProductType(productType);
-           }
-           if (newProduct.getBrandID()!=null && newProduct.getBrandID().getBrandID()!=null){
-               Brand brand = brandRepository.findById(newProduct.getBrandID().getBrandID()).orElse(null);
-               product.setBrandID(brand);
-           }
-           if (newProduct.getOriginID()!=null && newProduct.getOriginID().getOriginID()!=null)
-           {
-               Origin origin = originRepository.findById(newProduct.getOriginID().getOriginID()).orElse(null);
-               product.setOriginID(origin);
-           }
-           return productRepository.save(product);
-       }
-       return null;
+        Product product = productRepository.findById(id).orElse(null);
+        if (product!=null){
+            product.setAvatar(newProduct.getAvatar());
+            product.setTitle(newProduct.getTitle());
+            product.setDescription(newProduct.getDescription());
+            product.setPrice(newProduct.getPrice());
+            product.setMaterial(newProduct.getMaterial());
+            product.setStatus(newProduct.getStatus());
+            if (newProduct.getProductType()!=null && newProduct.getProductType().getProductTypeID()!=null){
+                ProductType productType = productTypeRepository.findById(newProduct.getProductType().getProductTypeID()).orElse(null);
+                product.setProductType(productType);
+            }
+            if (newProduct.getBrandID()!=null && newProduct.getBrandID().getBrandID()!=null){
+                Brand brand = brandRepository.findById(newProduct.getBrandID().getBrandID()).orElse(null);
+                product.setBrandID(brand);
+            }
+            if (newProduct.getOriginID()!=null && newProduct.getOriginID().getOriginID()!=null)
+            {
+                Origin origin = originRepository.findById(newProduct.getOriginID().getOriginID()).orElse(null);
+                product.setOriginID(origin);
+            }
+            return productRepository.save(product);
+        }
+        return null;
     }
 
     @Override
@@ -88,14 +88,21 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
+<<<<<<< HEAD
+=======
     public List<Product> sortProduct(int origin, int size, int category, int productType, int brand) {
         return productRepository.sortProduct(origin,size,category,productType,brand);
     }
 
     @Override
+>>>>>>> main
     public List<Product> findByTitle(String title, Status status) {
         return productRepository.findProductsByTitleContainingAndStatus(title, status);
     }
 
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> main
