@@ -3,11 +3,13 @@ package org.example.controller.Admin;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.example.entity.Cart;
+import org.example.repository.CartRepository;
 import org.example.service.ICartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.example.entity.enums.Status;
 
 import java.util.List;
 import java.util.Optional;
@@ -86,10 +88,10 @@ public class AdminCartController {
     }
 
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCart(@PathVariable Integer id) {
-        cartService.deleteCart(id);
-        return ResponseEntity.noContent().build();
+    @DeleteMapping("/{cartId}")
+    public ResponseEntity<Void> deleteCart(@PathVariable Integer cartId) {
+        cartService.deleteCart(cartId); // Gọi phương thức xóa đã sửa
+        return ResponseEntity.noContent().build(); // Trả về 204 No Content
     }
 }
 

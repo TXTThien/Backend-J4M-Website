@@ -7,6 +7,7 @@ import org.example.repository.CartRepository;
 import org.example.service.ICartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.example.entity.enums.Status;
 
 import java.util.List;
 import java.util.Optional;
@@ -49,7 +50,11 @@ public class CartServiceImpl implements ICartService {
     }
 
     @Override
-    public void deleteCart(Integer id) {
-        cartRepository.deleteById(id);
-    }
-}
+    public void deleteCart(Integer cartId) {
+        Optional<Cart> cartOptional = cartRepository.findById(cartId);
+        if (cartOptional.isPresent()) {
+            Cart cart = cartOptional.get();
+            cart.setStatus(Status.Disable); // Cập nhật trạng thái thành Disable
+            cartRepository.save(cart); // Lưu lại thay đổi vào cơ sở dữ liệu
+        }
+    }}
