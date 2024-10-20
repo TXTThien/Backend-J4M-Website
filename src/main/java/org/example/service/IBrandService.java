@@ -12,9 +12,7 @@ public interface IBrandService {
     Brand createBrand(Brand brand);
     Brand updateBrand(Integer id, Brand updatedBrand);
     void deleteBrand(Integer id);
-<<<<<<< HEAD
+
     void updateBrandStatus(Brand brand);
-=======
->>>>>>> main
 
 }

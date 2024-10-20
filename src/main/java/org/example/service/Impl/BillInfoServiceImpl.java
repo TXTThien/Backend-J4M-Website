@@ -33,7 +33,6 @@ public class BillInfoServiceImpl implements IBillInfoService {
     }
 
     @Override
-<<<<<<< HEAD
     public void deleteBillInfo(Integer billInfoId) {
         Optional<BillInfo> billInfoOptional = billInfoRepository.findById(billInfoId);
         if (billInfoOptional.isPresent()) {
@@ -43,9 +42,7 @@ public class BillInfoServiceImpl implements IBillInfoService {
         }
     }
 
-=======
     public List<BillInfo> findBillInfoByAccountID(int id, Status status) {
         return billInfoRepository.findBillInfoByBillID_AccountID_AccountIDAndStatus(id, status);
     }
->>>>>>> main
 }

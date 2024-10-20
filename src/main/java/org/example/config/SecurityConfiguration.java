@@ -73,22 +73,18 @@ public class SecurityConfiguration {
                         })
                 )
                 .csrf(AbstractHttpConfigurer::disable)
-<<<<<<< HEAD
                 .cors(withDefaults())
-=======
                 .exceptionHandling(e -> e
                         .authenticationEntryPoint((request, response, authException) -> {
                             response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access Denied");
                         })
                 )
->>>>>>> main
                 .authorizeHttpRequests(req -> {
                     req
                             .requestMatchers("/").permitAll()
                             .requestMatchers(WHITE_LIST_URL).permitAll()
                             .requestMatchers("/api/v1/admin/product/**").hasAuthority(admin.name())
                             .requestMatchers("/api/v1/admin/bill/**").hasAuthority(admin.name())
-<<<<<<< HEAD
                             .requestMatchers("/api/v1/admin/billinfo/**").hasAuthority(admin.name())
                             .requestMatchers("/api/v1/admin/brand/**").hasAuthority(admin.name())
                             .requestMatchers("/api/v1/admin/cart/**").hasAuthority(admin.name())
@@ -99,11 +95,9 @@ public class SecurityConfiguration {
                             .requestMatchers("/api/v1/admin/account/**").hasAuthority(admin.name())
                             .requestMatchers("/api/v1/admin/origin/**").hasAuthority(admin.name())
                             .requestMatchers("/api/v1/admin/banner/**").hasAuthority(admin.name())
-=======
                             .requestMatchers("/api/v1/admin/news/**").hasAuthority(admin.name())
                             .requestMatchers("/api/v1/admin/account/**").hasAuthority(admin.name())
                             .requestMatchers("/api/v1/admin/origin/**").hasAuthority(admin.name())
->>>>>>> main
                             .requestMatchers("/api/v1/admin/productsize/**").hasAuthority(admin.name())
                             .requestMatchers("/api/v1/admin/producttype/**").hasAuthority(admin.name())
                             .requestMatchers("/api/v1/admin/review/**").hasAuthority(admin.name())
@@ -133,8 +127,5 @@ public class SecurityConfiguration {
     }
 
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> main
+

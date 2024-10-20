@@ -71,8 +71,5 @@ public class AdminSizeController {
             return ResponseEntity.notFound().build();
         }
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> main
+

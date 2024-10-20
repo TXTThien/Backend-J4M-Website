@@ -33,8 +33,4 @@ public class NewsServiceImpl implements INewsService {
         news.setStatus(Status.Disable);
         newsRepository.save(news);
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> main

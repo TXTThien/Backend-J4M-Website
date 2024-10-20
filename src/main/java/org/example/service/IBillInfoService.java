@@ -12,10 +12,7 @@ public interface IBillInfoService {
     Optional<BillInfo> getBillInfoById(Integer billInfoId);
     void deleteBillInfo(Integer billInfoId);
 
-<<<<<<< HEAD
     BillInfo updateBillInfo(BillInfo billInfo);
 
-=======
     List<BillInfo>findBillInfoByAccountID (int id, Status status);
->>>>>>> main
 }

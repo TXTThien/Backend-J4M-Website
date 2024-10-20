@@ -6,8 +6,4 @@ public interface IOriginService {
     Origin updateOrigin(int id, Origin origin);
 
     void deleteOrigin(int id);
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> main

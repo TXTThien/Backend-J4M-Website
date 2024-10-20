@@ -71,8 +71,4 @@ public class AdminReviewController {
             return ResponseEntity.notFound().build();
         }
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> main

@@ -6,8 +6,5 @@ public interface IProductTypeService {
     ProductType updateProductType(int id, ProductType productType);
 
     void deleteProductType(int id);
-<<<<<<< HEAD
+
 }
-=======
-}
->>>>>>> main

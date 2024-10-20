@@ -6,8 +6,4 @@ public interface ISizeService {
     Size updateSize(int id, Size size);
 
     void deleteSize(int id);
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> main

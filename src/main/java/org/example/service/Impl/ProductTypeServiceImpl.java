@@ -40,8 +40,4 @@ public class ProductTypeServiceImpl implements IProductTypeService {
         productType.setStatus(Status.Disable);
         productTypeRepository.save(productType);
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> main

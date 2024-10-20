@@ -33,23 +33,22 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public Product updateProduct(Integer id, Product newProduct) {
         Product product = productRepository.findById(id).orElse(null);
-        if (product!=null){
+        if (product != null) {
             product.setAvatar(newProduct.getAvatar());
             product.setTitle(newProduct.getTitle());
             product.setDescription(newProduct.getDescription());
             product.setPrice(newProduct.getPrice());
             product.setMaterial(newProduct.getMaterial());
             product.setStatus(newProduct.getStatus());
-            if (newProduct.getProductType()!=null && newProduct.getProductType().getProductTypeID()!=null){
+            if (newProduct.getProductType() != null && newProduct.getProductType().getProductTypeID() != null) {
                 ProductType productType = productTypeRepository.findById(newProduct.getProductType().getProductTypeID()).orElse(null);
                 product.setProductType(productType);
             }
-            if (newProduct.getBrandID()!=null && newProduct.getBrandID().getBrandID()!=null){
+            if (newProduct.getBrandID() != null && newProduct.getBrandID().getBrandID() != null) {
                 Brand brand = brandRepository.findById(newProduct.getBrandID().getBrandID()).orElse(null);
                 product.setBrandID(brand);
             }
-            if (newProduct.getOriginID()!=null && newProduct.getOriginID().getOriginID()!=null)
-            {
+            if (newProduct.getOriginID() != null && newProduct.getOriginID().getOriginID() != null) {
                 Origin origin = originRepository.findById(newProduct.getOriginID().getOriginID()).orElse(null);
                 product.setOriginID(origin);
             }
@@ -59,50 +58,45 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public void  deleteProduct(Integer id) {
+    public void deleteProduct(Integer id) {
         Product product = productRepository.findById(id).orElse(null);
         assert product != null;
         product.setStatus(Status.Disable);
         productRepository.save(product);
     }
+
     @Override
     public Product getProductById(Integer id) {
         return productRepository.findById(id).orElse(null);
     }
 
 
-
     @Override
     public List<Product> findByBrand(String brand, Status status) {
-        return productRepository.findProductsByBrandIDBrandNameAndStatus(brand,status);
+        return productRepository.findProductsByBrandIDBrandNameAndStatus(brand, status);
     }
 
     @Override
     public List<Product> findByCategory(String category, Status status) {
-        return productRepository.findProductsByProductTypeCategoryIDCategoryNameAndStatus(category,status);
+        return productRepository.findProductsByProductTypeCategoryIDCategoryNameAndStatus(category, status);
     }
 
     @Override
     public List<Product> findByProductType(String producttype, Status status) {
-        return productRepository.findProductsByProductTypeTypeNameAndStatus(producttype,status);
+        return productRepository.findProductsByProductTypeTypeNameAndStatus(producttype, status);
     }
 
     @Override
-<<<<<<< HEAD
-=======
+
     public List<Product> sortProduct(int origin, int size, int category, int productType, int brand) {
-        return productRepository.sortProduct(origin,size,category,productType,brand);
+        return productRepository.sortProduct(origin, size, category, productType, brand);
     }
 
     @Override
->>>>>>> main
+
     public List<Product> findByTitle(String title, Status status) {
         return productRepository.findProductsByTitleContainingAndStatus(title, status);
     }
+}
 
 
-<<<<<<< HEAD
-}
-=======
-}
->>>>>>> main

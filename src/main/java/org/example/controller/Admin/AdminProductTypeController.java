@@ -71,8 +71,5 @@ public class AdminProductTypeController {
             return ResponseEntity.notFound().build();
         }
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> main
+

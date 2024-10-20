@@ -73,8 +73,5 @@ public class AdminNewsController {
             return ResponseEntity.notFound().build();
         }
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> main
+

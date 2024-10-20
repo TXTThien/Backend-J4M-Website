@@ -74,8 +74,5 @@ public class AdminProductSizeController {
             return ResponseEntity.notFound().build();
         }
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> main
+

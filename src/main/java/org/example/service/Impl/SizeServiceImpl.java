@@ -32,8 +32,4 @@ public class SizeServiceImpl implements ISizeService {
         size.setStatus(Status.Disable);
         sizeRepository.save(size);
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> main

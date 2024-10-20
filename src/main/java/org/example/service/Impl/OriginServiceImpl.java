@@ -31,8 +31,5 @@ public class OriginServiceImpl implements IOriginService {
         origin.setStatus(Status.Disable);
         originRepository.save(origin);
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> main
+

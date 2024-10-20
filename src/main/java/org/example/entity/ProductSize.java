@@ -1,10 +1,7 @@
 package org.example.entity;
 
-<<<<<<< HEAD
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-=======
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
->>>>>>> main
 import jakarta.persistence.*;
 import lombok.*;
 import org.example.entity.enums.Status;

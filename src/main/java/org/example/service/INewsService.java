@@ -5,8 +5,4 @@ import org.example.entity.News;
 public interface INewsService {
     News updateNews (int id, News news);
     void deleteNews(int id);
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> main
