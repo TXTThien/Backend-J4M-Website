@@ -24,15 +24,23 @@ public class AdminCartController {
     }
 
     @PostMapping
-    public ResponseEntity<Cart> createCart(@RequestBody Cart cart) {
+    public ResponseEntity<?> createCart(@RequestBody Cart cart) {
         try {
-            if (cart.getProductSizeID() == null || cart.getAccountID() == null) {
-                return ResponseEntity.badRequest().body(null); // Kiểm tra xem các thuộc tính có null không
+            // Kiểm tra các thuộc tính null
+            if (cart.getProductSizeID() == null) {
+                return ResponseEntity.badRequest().body("ProductSizeID cannot be null.");
             }
+            if (cart.getAccountID() == null) {
+                return ResponseEntity.badRequest().body("AccountID cannot be null.");
+            }
+
+            // Tạo Cart
             Cart createdCart = cartService.createCart(cart);
             return ResponseEntity.status(HttpStatus.CREATED).body(createdCart);
+
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            // Log lỗi nếu cần và trả về thông báo lỗi rõ ràng
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while creating the cart.");
         }
     }
 

@@ -1,10 +1,13 @@
 package org.example.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.example.entity.enums.Status;
+
+import java.util.List;
 
 @Builder
 @AllArgsConstructor
@@ -22,7 +25,6 @@ public class ProductSize {
 
     @ManyToOne
     @JoinColumn(name = "ProductID",nullable = false)
-    @JsonManagedReference
     private Product productID;
 
     @ManyToOne
@@ -36,4 +38,7 @@ public class ProductSize {
     @Column(name = "Status", nullable = false)
     protected Status status;
 
+    @JsonIgnore  // Ignore the carts field to avoid circular reference
+    @OneToMany(mappedBy = "productSizeID", fetch = FetchType.LAZY)
+    private List<Cart> carts;
 }
