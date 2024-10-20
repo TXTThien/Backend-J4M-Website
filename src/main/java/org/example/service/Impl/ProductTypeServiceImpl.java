@@ -1,5 +1,6 @@
 package org.example.service.Impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.example.entity.Category;
 import org.example.entity.News;
@@ -19,19 +20,24 @@ public class ProductTypeServiceImpl implements IProductTypeService {
 
     @Override
     public ProductType updateProductType(int id, ProductType productType) {
-        ProductType newProductType = productTypeRepository.findById(id).orElse(null);
-        if (newProductType!=null){
-            newProductType.setTypeName(productType.getTypeName());
-            newProductType.setStatus(productType.getStatus());
-            if (newProductType.getCategoryID()!=null && newProductType.getCategoryID().getCategoryID()!=null)
-            {
-                Category category = categoryRepository.findById(newProductType.getCategoryID().getCategoryID()).orElse(null);
-                newProductType.setCategoryID(category);
+        ProductType existingProductType = productTypeRepository.findById(id).orElse(null);
+        if (existingProductType != null) {
+            existingProductType.setTypeName(productType.getTypeName());
+            existingProductType.setStatus(productType.getStatus());
+
+            if (productType.getCategoryID() != null && productType.getCategoryID().getCategoryID() != null) {
+                Category category = categoryRepository.findById(productType.getCategoryID().getCategoryID()).orElse(null);
+                if (category != null) {
+                    existingProductType.setCategoryID(category);
+                } else {
+                    throw new EntityNotFoundException("Category not found with ID: " + productType.getCategoryID().getCategoryID());
+                }
             }
-            return productTypeRepository.save(newProductType);
+            return productTypeRepository.save(existingProductType);
         }
         return null;
     }
+
 
     @Override
     public void deleteProductType(int id) {

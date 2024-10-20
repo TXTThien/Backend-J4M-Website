@@ -1,5 +1,6 @@
 package org.example.service.Impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.example.entity.*;
 import org.example.entity.enums.Status;
@@ -18,24 +19,34 @@ public class ProductSizeServiceImpl implements IProductSizeService {
 
     @Override
     public ProductSize updateProductSize(int id, ProductSize productSize) {
-        ProductSize newProductSize = productSizeRepository.findById(id).orElse(null);
-        if (newProductSize!=null){
-            newProductSize.setStock(productSize.getStock());
-            newProductSize.setStatus(productSize.getStatus());
-            if (newProductSize.getProductID()!=null && newProductSize.getProductID().getProductID()!=null)
-            {
-                Product product = productRepository.findById(newProductSize.getProductID().getProductID()).orElse(null);
-                newProductSize.setProductID(product);
+        ProductSize existingProductSize = productSizeRepository.findById(id).orElse(null);
+        if (existingProductSize != null) {
+            existingProductSize.setStock(productSize.getStock());
+            existingProductSize.setStatus(productSize.getStatus());
+
+            if (productSize.getProductID() != null && productSize.getProductID().getProductID() != null) {
+                Product product = productRepository.findById(productSize.getProductID().getProductID()).orElse(null);
+                if (product != null) {
+                    existingProductSize.setProductID(product);
+                } else {
+                    throw new EntityNotFoundException("Product not found with ID: " + productSize.getProductID().getProductID());
+                }
             }
-            if (newProductSize.getSizeID()!=null && newProductSize.getSizeID().getSizeID()!=null)
-            {
-                Size size = sizeRepository.findById(newProductSize.getSizeID().getSizeID()).orElse(null);
-                newProductSize.setSizeID(size);
+
+            if (productSize.getSizeID() != null && productSize.getSizeID().getSizeID() != null) {
+                Size size = sizeRepository.findById(productSize.getSizeID().getSizeID()).orElse(null);
+                if (size != null) {
+                    existingProductSize.setSizeID(size);
+                } else {
+                    throw new EntityNotFoundException("Size not found with ID: " + productSize.getSizeID().getSizeID());
+                }
             }
-            return productSizeRepository.save(newProductSize);
+
+            return productSizeRepository.save(existingProductSize);
         }
         return null;
     }
+
 
     @Override
     public void deleteProductSize(int id) {

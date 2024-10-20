@@ -1,5 +1,6 @@
 package org.example.service.Impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.example.entity.*;
 import org.example.entity.enums.Status;
@@ -28,22 +29,30 @@ public class ReviewServiceImpl implements IReviewService {
 
     @Override
     public Review updateReview(int id, Review review) {
-        Review newReview = reviewRepository.findById(id).orElse(null);
-        if (newReview!=null){
-            newReview.setComment(review.getComment());
-            newReview.setRating(review.getRating());
-            newReview.setStatus(review.getStatus());
-            if (newReview.getProductID()!=null && newReview.getProductID().getProductID()!=null)
-            {
-                Product product = productRepository.findById(newReview.getProductID().getProductID()).orElse(null);
-                newReview.setProductID(product);
+        Review existingReview = reviewRepository.findById(id).orElse(null);
+        if (existingReview != null) {
+            existingReview.setComment(review.getComment());
+            existingReview.setRating(review.getRating());
+            existingReview.setStatus(review.getStatus());
+            if (review.getProductID() != null && review.getProductID().getProductID() != null) {
+                Product product = productRepository.findById(review.getProductID().getProductID()).orElse(null);
+                if (product != null) {
+                    existingReview.setProductID(product);
+                } else {
+                    throw new EntityNotFoundException("Product not found with ID: " + review.getProductID().getProductID());
+                }
             }
-            if (newReview.getAccountID()!=null && newReview.getAccountID().getAccountID()!=null)
-            {
-                Account account = accountRepository.findById(newReview.getAccountID().getAccountID()).orElse(null);
-                newReview.setAccountID(account);
+
+            if (review.getAccountID() != null && review.getAccountID().getAccountID() != null) {
+                Account account = accountRepository.findById(review.getAccountID().getAccountID()).orElse(null);
+                if (account != null) {
+                    existingReview.setAccountID(account);
+                } else {
+                    throw new EntityNotFoundException("Account not found with ID: " + review.getAccountID().getAccountID());
+                }
             }
-            return reviewRepository.save(newReview);
+
+            return reviewRepository.save(existingReview);
         }
         return null;
     }
