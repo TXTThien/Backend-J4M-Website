@@ -29,7 +29,7 @@ public class Discount {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ProductTypeID")
-    @JsonBackReference // Sử dụng JsonBackReference để tránh lỗi tuần hoàn và để ánh xạ đúng từ JSON
+    @JsonBackReference
     private ProductType productTypeID;
 
     @Column(name = "Discountpercent", precision = 5, scale = 2)
