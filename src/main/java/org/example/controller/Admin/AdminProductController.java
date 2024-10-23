@@ -96,7 +96,7 @@ public class AdminProductController {
     public ResponseEntity<?> deleteProduct(@PathVariable("id") int id) {
         Product existingProduct = productRepository.findById(id).orElse(null);
         if (existingProduct != null) {
-            productService.deleteProduct(id);
+            productService.deleteProduct(id); // Sử dụng service để đổi trạng thái sản phẩm
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.notFound().build();

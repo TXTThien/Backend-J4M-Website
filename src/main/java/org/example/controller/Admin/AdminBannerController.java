@@ -34,23 +34,34 @@ public class AdminBannerController {
 
     @PostMapping
     public ResponseEntity<?> createBanner(@RequestBody Banner banner) {
+        int count = 0;
+
+        // Đếm số trường không null
         if (banner.getProductID() != null && banner.getProductID().getProductID() != null) {
             banner.setProductID(productRepository.findById(banner.getProductID().getProductID()).orElse(null));
+            count++;
         }
 
         if (banner.getProductTypeID() != null && banner.getProductTypeID().getProductTypeID() != null) {
             banner.setProductTypeID(productTypeRepository.findById(banner.getProductTypeID().getProductTypeID()).orElse(null));
+            count++;
         }
 
         if (banner.getCategoryID() != null && banner.getCategoryID().getCategoryID() != null) {
             banner.setCategoryID(categoryRepository.findById(banner.getCategoryID().getCategoryID()).orElse(null));
+            count++;
         }
-        if (banner.getProductID() == null || banner.getProductTypeID() == null || banner.getCategoryID() == null) {
-            return ResponseEntity.badRequest().body("Invalid Product, ProductType, or Category");
+
+        // Kiểm tra xem có nhiều hơn một trường được cung cấp không
+        if (count != 1) {
+            return ResponseEntity.badRequest().body("You must specify exactly one of Product, ProductType, or Category.");
         }
+
+        // Nếu không có vấn đề gì, lưu banner
         Banner savedBanner = bannerService.save(banner);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedBanner);
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Banner> getBannerById(@PathVariable Integer id) {
@@ -65,36 +76,46 @@ public class AdminBannerController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateBanner(@PathVariable Integer id, @RequestBody Banner banner) {
-        Banner existingBanner = bannerService.findById(id);
-        if (existingBanner == null) {
-            return ResponseEntity.notFound().build();
+        try {
+            Banner existingBanner = bannerService.findById(id);
+            if (existingBanner == null) {
+                return ResponseEntity.notFound().build();
+            }
+
+            int count = 0; // Đếm số trường không null
+
+            if (banner.getProductID() != null && banner.getProductID().getProductID() != null) {
+                existingBanner.setProductID(productRepository.findById(banner.getProductID().getProductID()).orElse(null));
+                count++;
+            }
+
+            if (banner.getProductTypeID() != null && banner.getProductTypeID().getProductTypeID() != null) {
+                existingBanner.setProductTypeID(productTypeRepository.findById(banner.getProductTypeID().getProductTypeID()).orElse(null));
+                count++;
+            }
+
+            if (banner.getCategoryID() != null && banner.getCategoryID().getCategoryID() != null) {
+                existingBanner.setCategoryID(categoryRepository.findById(banner.getCategoryID().getCategoryID()).orElse(null));
+                count++;
+            }
+
+            // Kiểm tra xem có nhiều hơn một trường được cung cấp không
+            if (count != 1) {
+                return ResponseEntity.badRequest().body("You must specify exactly one of Product, ProductType, or Category.");
+            }
+
+            // Cập nhật các trường khác của banner
+            existingBanner.setBannerImage(banner.getBannerImage());
+            existingBanner.setBannerType(banner.getBannerType());
+            existingBanner.setStatus(banner.getStatus());
+
+            Banner updatedBanner = bannerService.update(existingBanner);
+            return ResponseEntity.ok(updatedBanner);
+
+        } catch (Exception e) {
+            // Log lỗi nếu cần và trả về thông báo lỗi rõ ràng
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while updating the banner.");
         }
-
-        if (banner.getProductID() != null && banner.getProductID().getProductID() != null) {
-            banner.setProductID(productRepository.findById(banner.getProductID().getProductID()).orElse(null));
-        }
-
-        if (banner.getProductTypeID() != null && banner.getProductTypeID().getProductTypeID() != null) {
-            banner.setProductTypeID(productTypeRepository.findById(banner.getProductTypeID().getProductTypeID()).orElse(null));
-        }
-
-        if (banner.getCategoryID() != null && banner.getCategoryID().getCategoryID() != null) {
-            banner.setCategoryID(categoryRepository.findById(banner.getCategoryID().getCategoryID()).orElse(null));
-        }
-
-        if (banner.getProductID() == null || banner.getProductTypeID() == null || banner.getCategoryID() == null) {
-            return ResponseEntity.badRequest().body("Invalid Product, ProductType, or Category");
-        }
-
-        existingBanner.setBannerImage(banner.getBannerImage());
-        existingBanner.setBannerType(banner.getBannerType());
-        existingBanner.setProductID(banner.getProductID());
-        existingBanner.setProductTypeID(banner.getProductTypeID());
-        existingBanner.setCategoryID(banner.getCategoryID());
-        existingBanner.setStatus(banner.getStatus());
-
-        Banner updatedBanner = bannerService.update(existingBanner);
-        return ResponseEntity.ok(updatedBanner);
     }
 
     @DeleteMapping("/{id}")

@@ -60,9 +60,10 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public void deleteProduct(Integer id) {
         Product product = productRepository.findById(id).orElse(null);
-        assert product != null;
-        product.setStatus(Status.Disable);
-        productRepository.save(product);
+        if (product != null) {
+            product.setStatus(Status.Disable); // Chuyển trạng thái thành Disable
+            productRepository.save(product); // Lưu lại thay đổi vào cơ sở dữ liệu
+        }
     }
 
     @Override
