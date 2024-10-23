@@ -80,6 +80,7 @@ public class AdminProductController {
         }
     }
 
+
     @PutMapping("/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable("id") int id, @Valid @RequestBody Product newProduct) {
         Product updateProduct = productService.updateProduct(id, newProduct);

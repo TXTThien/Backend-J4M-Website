@@ -104,14 +104,14 @@ public class AuthenticationController {
         return ResponseEntity.ok("Đã đăng xuất thành công");
     }
     @PostMapping("/forgot-password")
-    public ResponseEntity<?> forgotPassword(@RequestParam("username") String username) {
+    public ResponseEntity<?> forgotPassword(@RequestBody ForgotPasswordRequest forgotPasswordRequest) {
+        String username = forgotPasswordRequest.getUsername();
         Optional<Account> userOpt = accountService.findAccountByUsername(username);
 
         if (userOpt.isPresent()) {
             Account user = userOpt.get();
             String email = accountRepository.findEmailByUsername(username);
 
-            // Kiểm tra nếu email tồn tại
             if (email != null && !email.isEmpty()) {
                 String otp = emailService.generateRandomCode(); // Tạo mã OTP
 
@@ -131,29 +131,26 @@ public class AuthenticationController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body("Tài khoản này chưa có email liên kết");
             }
-
         } else {
-            // Trả về phản hồi lỗi nếu username không tồn tại
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("Tài khoản chưa được đăng ký");
         }
     }
-
     @PostMapping("/verify-otp")
-    public ResponseEntity<?> verifyOtp(@RequestParam("username") String username,
-                                       @RequestParam("otp") String otp,
-                                       @RequestParam("newPassword") String newPassword) {
+    public ResponseEntity<?> verifyOtp(@RequestBody VerifyOtpRequest verifyOtpRequest) {
+
+        String username = verifyOtpRequest.getUsername();
+        String otp = verifyOtpRequest.getOtp();
+        String newPassword = verifyOtpRequest.getNewPassword();
+
         Optional<Account> userOpt = accountService.findAccountByUsername(username);
         if (userOpt.isPresent()) {
             Account user = userOpt.get();
 
-            // Kiểm tra mã OTP và thời gian hết hạn
             if (user.getOtp().equals(otp) && user.getOtpExpiry().isAfter(LocalDateTime.now())) {
-                // OTP đúng và chưa hết hạn, cho phép đặt mật khẩu mới
                 String encodedPassword = passwordEncoder.encode(newPassword);
                 user.setPassword(encodedPassword);
 
-                // Xóa mã OTP sau khi đã sử dụng
                 user.setOtp(null);
                 user.setOtpExpiry(null);
 

@@ -1,6 +1,7 @@
 package org.example.controller.User;
 
 import lombok.RequiredArgsConstructor;
+import org.example.auth.ChangePassword;
 import org.example.entity.Account;
 import org.example.entity.BillInfo;
 import org.example.entity.Review;
@@ -92,15 +93,16 @@ public class UserAccountController {
 
     @PutMapping("/changepassword")
     public ResponseEntity<String> updateChangePassword(
-            @RequestParam("newpass") String newpass,
-            @RequestParam("conpass") String conpass) {
+            @RequestBody ChangePassword changePassword) {
 
         int idAccount = getIDAccountService.common();
+        String newpass = changePassword.getNewpass();
+        String curpass = changePassword.getCurpass();
 
         Account account = accountRepository.findById(idAccount)
                 .orElseThrow(() -> new RuntimeException("Tài khoản không tồn tại"));
 
-        if (!passwordEncoder.matches(conpass, account.getPassword())) {
+        if (!passwordEncoder.matches(curpass, account.getPassword())) {
             return ResponseEntity.badRequest().body("Mật khẩu hiện tại không đúng.");
         }
 

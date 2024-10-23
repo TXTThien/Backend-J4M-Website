@@ -102,10 +102,8 @@ public class SecurityConfiguration {
                             .requestMatchers("/api/v1/admin/producttype/**").hasAuthority(admin.name())
                             .requestMatchers("/api/v1/admin/review/**").hasAuthority(admin.name())
                             .requestMatchers("/api/v1/admin/size/**").hasAuthority(admin.name())
-                            .requestMatchers("/account/**").hasAuthority(admin.name())
-                            .requestMatchers("/review/**").hasAuthority(admin.name())
-                            .requestMatchers("/user").hasAuthority(admin.name())
-                            .requestMatchers("/dashboard").hasAuthority(admin.name())
+                            .requestMatchers("/account/**").hasAuthority(user.name())
+                            .requestMatchers("/review/**").hasAuthority(user.name())
                             .anyRequest().authenticated();
                 })
                 .authenticationProvider(authenticationProvider)
