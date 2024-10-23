@@ -48,31 +48,38 @@ public class AdminProductController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("Product with ID " + productID + " already exists.");
         }
+
         try {
+            Product saveProduct = new Product();
+
             if (product.getProductType() != null) {
-                ProductType productType = product.getProductType();
-                if (productType.getCategoryID() != null) {
-                    Category category = productType.getCategoryID();
-                    categoryRepository.save(category);
-                }
-                productTypeRepository.save(productType);
+                saveProduct.setProductType(product.getProductType());
             }
 
             if (product.getBrandID() != null) {
-                brandRepository.save(product.getBrandID());
+                saveProduct.setBrandID(product.getBrandID());
             }
 
             if (product.getOriginID() != null) {
-                originRepository.save(product.getOriginID());
+                saveProduct.setOriginID(product.getOriginID());
             }
 
-            Product newProduct = productRepository.save(product);
+            saveProduct.setStatus(product.getStatus());
+            saveProduct.setPrice(product.getPrice());
+            saveProduct.setMaterial(product.getMaterial());
+            saveProduct.setAvatar(product.getAvatar());
+            saveProduct.setTitle(product.getTitle());
+            saveProduct.setDescription(product.getDescription());
+
+            Product newProduct = productRepository.save(saveProduct);
+
             return ResponseEntity.status(HttpStatus.CREATED).body(newProduct);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error occurred while creating product.");
         }
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable("id") int id, @Valid @RequestBody Product newProduct) {

@@ -23,7 +23,7 @@ public class UserReviewController {
 
     private final GetIDAccountFromAuthService getIDAccountService;
 
-    @PostMapping("") //Chỉ cần nhập productid, comment, rating
+    @PostMapping("")
     public ResponseEntity<Review> makeReview(@RequestBody Review review) {
         int idAccount = getIDAccountService.common();
         Account account = accountRepository.findAccountByAccountID(idAccount);
