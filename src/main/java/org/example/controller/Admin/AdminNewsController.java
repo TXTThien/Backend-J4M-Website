@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +40,10 @@ public class AdminNewsController {
     @PostMapping("")
     public ResponseEntity<?> createNews(@RequestBody News news) {
         Integer newsID = news.getNewsID();
-
+        if (news.getDate() == null)
+        {
+            news.setDate(LocalDateTime.now());
+        }
         if (newsID != null && newsRepository.findById(newsID).isPresent()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("News with ID " + newsID + " already exists.");
@@ -50,11 +54,12 @@ public class AdminNewsController {
             return ResponseEntity.status(HttpStatus.CREATED).body(newNews);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error occurred while creating product.");
+                    .body("Error occurred while creating review.");
         }
     }
     @PutMapping("/{id}")
     public ResponseEntity<News> updateNews(@PathVariable("id") int id, @Valid @RequestBody News news) {
+        news.setDate(LocalDateTime.now());
         News updateNews = newsService.updateNews(id, news);
 
         if (updateNews == null) {

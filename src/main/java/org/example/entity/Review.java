@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.example.entity.enums.Status;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -35,4 +38,7 @@ public class Review {
     @Enumerated(EnumType.STRING)
     @Column(name = "Status", nullable = false)
     protected Status status;
+
+    @Column(name = "Date", nullable = false)
+    private LocalDateTime date;
 }

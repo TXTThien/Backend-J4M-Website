@@ -49,6 +49,7 @@ public class SecurityConfiguration {
             "/product/**",
             "/j4m/**",
             "/search/**",
+            "/detail/**",
     };
 
     private final JwtAuthenticationFilter jwtAuthFilter;
@@ -104,6 +105,8 @@ public class SecurityConfiguration {
                             .requestMatchers("/api/v1/admin/size/**").hasAuthority(admin.name())
                             .requestMatchers("/account/**").hasAuthority(user.name())
                             .requestMatchers("/review/**").hasAuthority(user.name())
+                            .requestMatchers("/AddToPrebuy/**").hasAuthority(user.name())
+
                             .anyRequest().authenticated();
                 })
                 .authenticationProvider(authenticationProvider)

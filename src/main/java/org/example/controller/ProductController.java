@@ -2,7 +2,7 @@ package org.example.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.entity.*;
-import org.example.service.IProductService;
+import org.example.service.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,16 +20,44 @@ import java.util.Map;
 public class ProductController {
 
     private final IProductService productService;
+    private final ICategoryService categoryService;
+    private final IProductTypeService productTypeService;
+    private final IBrandService brandService;
+    private final IOriginService originService;
+    private final ISizeService sizeService;
 
     @GetMapping("")
     public ResponseEntity<?> getListProduct() {
         List<Product> productList = productService.findAllEnable();
+        List<Category> categoryList = categoryService.findAllEnable();
+        List<ProductType> productTypeList = productTypeService.findAllEnable();
+        List<Brand> brandList = brandService.findAllEnable();
+        List<Origin> originList = originService.findAllEnable();
+        List<Size> sizeList = sizeService.findAllEnable();
+        Map<String, Object> response = new HashMap<>();
 
         if (!productList.isEmpty()) {
-            Map<String, Object> response = new HashMap<>();
             response.put("products", productList);
+        }
+        if (!categoryList.isEmpty()) {
+            response.put("category", categoryList);
+        }
+        if (!originList.isEmpty()) {
+            response.put("origin", originList);
+        }
+        if (!brandList.isEmpty()) {
+            response.put("brand", brandList);
+        }
+        if (!productTypeList.isEmpty()) {
+            response.put("productType", productTypeList);
+        }
+        if (!productTypeList.isEmpty()) {
+            response.put("size", sizeList);
+        }
+        if (!response.isEmpty()){
             return ResponseEntity.ok(response);
-        } else {
+        }
+        else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No products found");
         }
     }

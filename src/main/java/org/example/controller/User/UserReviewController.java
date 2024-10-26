@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+
 @RestController
 @RequestMapping("/review")
 @RequiredArgsConstructor
@@ -32,12 +34,19 @@ public class UserReviewController {
         review.setAccountID(account);
         Review existingReview = reviewService.findReviewByAccountIDAndProduct(idAccount, idProduct, Status.Enable);
 
+
+        if (review.getDate() == null)
+        {
+            review.setDate(LocalDateTime.now());
+        }
         if (existingReview == null) {
             Review newReview = reviewRepository.save(review);
             return ResponseEntity.status(HttpStatus.CREATED).body(newReview);
-        } else  {
+        }
+        else  {
             existingReview.setRating(review.getRating());
             existingReview.setComment(review.getComment());
+            existingReview.setDate(LocalDateTime.now());
             Review updatedReview = reviewRepository.save(existingReview);
             return ResponseEntity.ok(updatedReview);
         }

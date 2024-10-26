@@ -10,6 +10,8 @@ import org.example.repository.SizeRepository;
 import org.example.service.IProductSizeService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ProductSizeServiceImpl implements IProductSizeService {
@@ -54,5 +56,10 @@ public class ProductSizeServiceImpl implements IProductSizeService {
         assert productSize != null;
         productSize.setStatus(Status.Disable);
         productSizeRepository.save(productSize);
+    }
+
+    @Override
+    public List<ProductSize> findProductSizeByProductID(int id) {
+        return productSizeRepository.findProductSizesByProductIDProductIDAndStatus(id,Status.Enable);
     }
 }

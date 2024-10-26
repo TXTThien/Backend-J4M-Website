@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +38,10 @@ public class AdminReviewController {
     @PostMapping("")
     public ResponseEntity<?> createReview(@RequestBody Review review) {
         Integer reviewID = review.getReviewID();
+        if (review.getDate() == null)
+        {
+            review.setDate(LocalDateTime.now());
+        }
 
         if (reviewID != null && reviewRepository.findById(reviewID).isPresent()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -53,8 +58,8 @@ public class AdminReviewController {
     }
     @PutMapping("/{id}")
     public ResponseEntity<Review> updateProductType(@PathVariable("id") int id, @Valid @RequestBody Review review) {
+        review.setDate(LocalDateTime.now());
         Review updateProductType = reviewService.updateReview(id, review);
-
         if (updateProductType == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(null);

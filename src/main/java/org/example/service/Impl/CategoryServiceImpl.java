@@ -1,6 +1,7 @@
 package org.example.service.Impl;
 
 import org.example.entity.Category;
+import org.example.entity.enums.Status;
 import org.example.repository.CategoryRepository;
 import org.example.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,5 +47,10 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
     public void deleteCategory(Integer id) {
         categoryRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Category> findAllEnable() {
+        return categoryRepository.findAllByStatus(Status.Enable);
     }
 }

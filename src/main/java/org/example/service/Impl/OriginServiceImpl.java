@@ -8,6 +8,8 @@ import org.example.repository.OriginRepository;
 import org.example.service.IOriginService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class OriginServiceImpl implements IOriginService {
@@ -30,6 +32,11 @@ public class OriginServiceImpl implements IOriginService {
         assert origin != null;
         origin.setStatus(Status.Disable);
         originRepository.save(origin);
+    }
+
+    @Override
+    public List<Origin> findAllEnable() {
+        return originRepository.findAllByStatus(Status.Enable);
     }
 }
 

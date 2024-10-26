@@ -34,6 +34,8 @@ public class ReviewServiceImpl implements IReviewService {
             existingReview.setComment(review.getComment());
             existingReview.setRating(review.getRating());
             existingReview.setStatus(review.getStatus());
+            existingReview.setDate(review.getDate());
+
             if (review.getProductID() != null && review.getProductID().getProductID() != null) {
                 Product product = productRepository.findById(review.getProductID().getProductID()).orElse(null);
                 if (product != null) {
@@ -65,6 +67,11 @@ public class ReviewServiceImpl implements IReviewService {
     @Override
     public Review findReviewByAccountIDAndProduct(int id, int product, Status status) {
         return reviewRepository.findReviewsByAccountID_AccountIDAndProductID_ProductIDAndStatus(id, product, status);
+    }
+
+    @Override
+    public List<Review> findReviewByProductID(int id) {
+        return reviewRepository.findReviewsByProductIDProductIDAndStatus(id, Status.Enable);
     }
 }
 

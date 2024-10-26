@@ -15,4 +15,5 @@ public interface IBrandService {
 
     void updateBrandStatus(Brand brand);
 
+    List<Brand> findAllEnable();
 }

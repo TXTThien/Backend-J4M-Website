@@ -10,4 +10,7 @@ public interface ICategoryService {
     Category createCategory(Category category);
     Category updateCategory(Integer id, Category categoryDetails);
     void deleteCategory(Integer id);
+
+    List<Category>findAllEnable();
+
 }

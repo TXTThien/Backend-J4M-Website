@@ -46,6 +46,11 @@ public class BrandServiceImpl implements IBrandService {
     }
 
     @Override
+    public List<Brand> findAllEnable() {
+        return brandRepository.findAllByStatus(Status.Enable);
+    }
+
+    @Override
     public void deleteBrand(Integer id) {
         Optional<Brand> brandOptional = brandRepository.findById(id);
         if (brandOptional.isPresent()) {

@@ -12,6 +12,8 @@ import org.example.repository.ProductTypeRepository;
 import org.example.service.IProductTypeService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ProductTypeServiceImpl implements IProductTypeService {
@@ -45,5 +47,10 @@ public class ProductTypeServiceImpl implements IProductTypeService {
         assert productType != null;
         productType.setStatus(Status.Disable);
         productTypeRepository.save(productType);
+    }
+
+    @Override
+    public List<ProductType> findAllEnable() {
+        return productTypeRepository.findAllByStatus(Status.Enable);
     }
 }

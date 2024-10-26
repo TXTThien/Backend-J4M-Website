@@ -13,5 +13,6 @@ public interface IReviewService {
 
     Review findReviewByAccountIDAndProduct (int id, int product, Status status);
 
+    List<Review> findReviewByProductID(int id);
 }
 

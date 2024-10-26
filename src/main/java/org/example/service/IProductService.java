@@ -11,14 +11,11 @@ public interface IProductService {
     List<Product> findAll();
     List<Product> findAllEnable();
 
-
     Product updateProduct (Integer id, Product newProduct);
     void deleteProduct (Integer id);
     Product getProductById(Integer id);
 
     List<Product>findByBrand(String brand, Status status);
-
-
 
 
     List<Product>findByCategory(String category, Status status);

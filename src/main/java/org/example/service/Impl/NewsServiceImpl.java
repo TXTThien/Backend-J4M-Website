@@ -20,6 +20,7 @@ public class NewsServiceImpl implements INewsService {
             newNews.setNewsTitle(news.getNewsTitle());
             newNews.setStatus(news.getStatus());
             newNews.setContent(news.getContent());
+            newNews.setDate(news.getDate());
 
             return newsRepository.save(newNews);
         }

@@ -12,8 +12,6 @@ public interface IAccountService {
 
     Account getAccountById(Integer accountId);
 
-
-
     Account makeAccount(RegisterRequest request);
 
 

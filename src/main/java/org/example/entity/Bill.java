@@ -1,4 +1,5 @@
 package org.example.entity;
+import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import jakarta.persistence.*;
@@ -36,5 +37,6 @@ public class Bill {
     @Column(name = "Status", nullable = false)
     protected Status status;;
 
-
+    @Column(name = "Date", nullable = false)
+    private LocalDate date;
 }

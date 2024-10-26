@@ -8,6 +8,8 @@ import org.example.repository.SizeRepository;
 import org.example.service.ISizeService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class SizeServiceImpl implements ISizeService {
@@ -31,5 +33,10 @@ public class SizeServiceImpl implements ISizeService {
         assert size != null;
         size.setStatus(Status.Disable);
         sizeRepository.save(size);
+    }
+
+    @Override
+    public List<Size> findAllEnable() {
+        return sizeRepository.findAllByStatus(Status.Enable);
     }
 }
