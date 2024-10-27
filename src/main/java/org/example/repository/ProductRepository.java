@@ -1,8 +1,10 @@
 package org.example.repository;
 
+import org.example.dto.ProductDTO;
 import org.example.entity.Brand;
 import org.example.entity.Product;
 import org.example.entity.enums.Status;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,6 +25,13 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     List<Product> findProductsByProductTypeTypeNameAndStatus(String ProductType , Status status);
 
+    @Query("SELECT new org.example.dto.ProductDTO(p.productID, p.avatar, p.title, SUM(bi.number), p.material, p.price) " +
+            "FROM Product p " +
+            "JOIN ProductSize ps ON ps.productID = p " +
+            "JOIN Billinfo bi ON bi.productSizeID = ps " +
+            "where bi.status = 'Enable' GROUP BY p.productID " +
+            "ORDER BY SUM(bi.number) DESC")
+    List<ProductDTO> findTop10BestSellingProducts(Pageable pageable);
 
 
     @Query("SELECT p FROM ProductSize ps " +

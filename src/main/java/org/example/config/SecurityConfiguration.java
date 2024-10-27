@@ -50,6 +50,7 @@ public class SecurityConfiguration {
             "/j4m/**",
             "/search/**",
             "/detail/**",
+            "/homepage/**",
     };
 
     private final JwtAuthenticationFilter jwtAuthFilter;
