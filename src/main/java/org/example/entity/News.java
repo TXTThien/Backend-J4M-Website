@@ -35,6 +35,7 @@ public class News {
     @Column(name = "Status", nullable = false)
     protected Status status;
 
+
     @Column(name = "Date", nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime date;
