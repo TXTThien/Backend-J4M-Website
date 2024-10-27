@@ -29,7 +29,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             "FROM Product p " +
             "JOIN ProductSize ps ON ps.productID = p " +
             "JOIN Billinfo bi ON bi.productSizeID = ps " +
-            "GROUP BY p.productID " +
+            "where bi.status = 'Enable' GROUP BY p.productID " +
             "ORDER BY SUM(bi.number) DESC")
     List<ProductDTO> findTop10BestSellingProducts(Pageable pageable);
 

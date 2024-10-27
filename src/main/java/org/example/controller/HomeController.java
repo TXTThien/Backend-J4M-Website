@@ -45,14 +45,14 @@ public class HomeController {
         List<News> newsList = newsService.find3NewsEnable();
         List<ProductDTO> productList = productService.find10HotestProductEnable();
 
-//        if (bannerList != null) {
-//            response.put("bannerList", bannerList);
-//        }
-//        if (newsList != null) {
-//            response.put("newsList", newsList);
-//        }
+        if (bannerList != null) {
+            response.put("bannerList", bannerList);
+        }
+        if (newsList != null) {
+            response.put("newsList", newsList);
+        }
         if (productList != null) {
-            response.put("newsList", productList);
+            response.put("productList", productList);
         }
         return !response.isEmpty() ?
                 ResponseEntity.ok(response) :
