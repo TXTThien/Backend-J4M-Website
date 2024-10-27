@@ -54,8 +54,6 @@ public class SecurityConfiguration {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
-    private final LogoutHandler logoutHandler;
-
 
 
     @Bean
@@ -103,10 +101,11 @@ public class SecurityConfiguration {
                             .requestMatchers("/api/v1/admin/producttype/**").hasAuthority(admin.name())
                             .requestMatchers("/api/v1/admin/review/**").hasAuthority(admin.name())
                             .requestMatchers("/api/v1/admin/size/**").hasAuthority(admin.name())
+                            .requestMatchers("/api/v1/upload/**").hasAuthority(admin.name())
                             .requestMatchers("/account/**").hasAuthority(user.name())
                             .requestMatchers("/review/**").hasAuthority(user.name())
-                            .requestMatchers("/AddToPrebuy/**").hasAuthority(user.name())
-
+                            .requestMatchers("/addToPrebuy/**").hasAuthority(user.name())
+                            .requestMatchers("/prebuy").hasAuthority(user.name())
                             .anyRequest().authenticated();
                 })
                 .authenticationProvider(authenticationProvider)

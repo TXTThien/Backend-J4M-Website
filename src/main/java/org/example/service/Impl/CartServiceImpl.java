@@ -57,4 +57,10 @@ public class CartServiceImpl implements ICartService {
             cart.setStatus(Status.Disable); // Cập nhật trạng thái thành Disable
             cartRepository.save(cart); // Lưu lại thay đổi vào cơ sở dữ liệu
         }
-    }}
+    }
+
+    @Override
+    public List<Cart> findCartsByAccountID(int id) {
+        return cartRepository.findCartsByAccountID_AccountIDAndStatusOrderByCartIDDesc(id,Status.Enable);
+    }
+}

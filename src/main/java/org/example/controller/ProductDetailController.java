@@ -45,7 +45,7 @@ public class ProductDetailController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
-    @PostMapping("/AddToPrebuy")
+    @PostMapping("/addToPrebuy")
     public  ResponseEntity<?> AddToCart (@RequestBody Cart cart){
         int idAccount = getIDAccountService.common();
         Account account = accountService.getAccountById(idAccount);
