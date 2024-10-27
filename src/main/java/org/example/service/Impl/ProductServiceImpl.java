@@ -1,6 +1,7 @@
 package org.example.service.Impl;
 
 import lombok.RequiredArgsConstructor;
+import org.example.dto.ProductDTO;
 import org.example.entity.*;
 import org.example.entity.enums.Status;
 import org.example.repository.BrandRepository;
@@ -8,6 +9,8 @@ import org.example.repository.OriginRepository;
 import org.example.repository.ProductRepository;
 import org.example.repository.ProductTypeRepository;
 import org.example.service.IProductService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -97,6 +100,13 @@ public class ProductServiceImpl implements IProductService {
 
     public List<Product> findByTitle(String title, Status status) {
         return productRepository.findProductsByTitleContainingAndStatus(title, status);
+    }
+
+    @Override
+    public List<ProductDTO> find10HotestProductEnable() {
+        Pageable topTen = PageRequest.of(0, 10);
+        List<ProductDTO> top10BestSellingProducts = productRepository.findTop10BestSellingProducts(topTen);
+        return top10BestSellingProducts;
     }
 }
 

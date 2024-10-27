@@ -10,4 +10,7 @@ public interface IBannerService {
     List<Banner> findAll();
     Banner update(Banner banner);
     boolean delete(Integer id);
+
+    List<Banner> find4BannerEnable();
+
 }

@@ -1,5 +1,6 @@
 package org.example.service;
 
+import org.example.dto.ProductDTO;
 import org.example.entity.Brand;
 import org.example.entity.Product;
 import org.example.entity.*;
@@ -24,5 +25,7 @@ public interface IProductService {
 
     List<Product> sortProduct (int origin, int size, int category, int productType, int brand);
     List<Product> findByTitle(String title, Status status);
+
+    List<ProductDTO> find10HotestProductEnable();
 }
 

@@ -6,8 +6,8 @@ import org.example.service.IBannerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.example.entity.enums.Status;
-
-
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import java.util.List;
 
 @Service
@@ -53,6 +53,13 @@ public class BannerServiceImpl implements IBannerService {
             bannerRepository.save(existingBanner);
             return true;
         }).orElse(false);
+    }
+
+    @Override
+    public List<Banner> find4BannerEnable() {
+        Pageable pageable = PageRequest.of(0, 4);
+        List<Banner> banners = bannerRepository.findTop4ByStatusOrderByIdDesc(Status.Enable, pageable);
+        return banners;
     }
 
 }

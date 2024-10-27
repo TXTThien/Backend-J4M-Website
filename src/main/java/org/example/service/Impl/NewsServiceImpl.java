@@ -5,7 +5,11 @@ import org.example.entity.*;
 import org.example.entity.enums.Status;
 import org.example.repository.NewsRepository;
 import org.example.service.INewsService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -33,5 +37,12 @@ public class NewsServiceImpl implements INewsService {
         assert news != null;
         news.setStatus(Status.Disable);
         newsRepository.save(news);
+    }
+
+    @Override
+    public List<News> find3NewsEnable() {
+        Pageable pageable = PageRequest.of(0, 3);
+        List<News> news = newsRepository.findTop3ByStatusOrderByIdDesc(Status.Enable, pageable);
+        return news;
     }
 }
