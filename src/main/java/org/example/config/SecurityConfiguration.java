@@ -108,6 +108,8 @@ public class SecurityConfiguration {
                             .requestMatchers("/review/**").hasAuthority(user.name())
                             .requestMatchers("/addToPrebuy/**").hasAuthority(user.name())
                             .requestMatchers("/prebuy/**").hasAuthority(user.name())
+                            .requestMatchers("/payment_info").permitAll()
+
                             .anyRequest().authenticated();
                 })
                 .authenticationProvider(authenticationProvider)
