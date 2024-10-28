@@ -71,12 +71,12 @@ public class UserPrebuyController {
     @PutMapping("/{id}")
     public ResponseEntity<?> updateCart(@PathVariable Integer id, @RequestBody CartUpdateRequest request) {
 
-        ProductSize productSize = productSizeService.findProductSizeByProductIDAndSize(id, request.getSize());
+        Cart cart =cartService.getCartById(id);
+        ProductSize productSize = productSizeService.findProductSizeByProductIDAndSize(cart.getProductSizeID().getProductID().getProductID(), request.getSize());
         if (productSize == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product size not found");
         }
 
-        Cart cart = cartService.getCartById(id);
         if (cart == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cart not found");
         }
@@ -89,7 +89,7 @@ public class UserPrebuyController {
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteCart(@PathVariable Integer id){
-        cartService.deleteCart(id);
+        cartService.hardDeleteCart(id);
         return ResponseEntity.noContent().build();
     }
     @PostMapping("/buy")
