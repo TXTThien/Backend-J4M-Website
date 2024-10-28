@@ -27,7 +27,7 @@ public class Bill {
     private Account accountID;
 
     @Column(name = "Ispaid",length = 1)
-    private Integer paid;
+    private Boolean paid;
 
     @OneToMany(mappedBy = "billID")
     @ToString.Exclude
@@ -35,7 +35,7 @@ public class Bill {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "Status", nullable = false)
-    protected Status status;;
+    protected Status status;
 
     @Column(name = "Date", nullable = false)
     private LocalDate date;

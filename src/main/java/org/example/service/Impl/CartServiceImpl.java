@@ -8,6 +8,7 @@ import org.example.service.ICartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.example.entity.enums.Status;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +16,6 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class CartServiceImpl implements ICartService {
-
     private final CartRepository cartRepository;
 
     @Override
@@ -60,7 +60,18 @@ public class CartServiceImpl implements ICartService {
     }
 
     @Override
+    @Transactional
+    public void hardDeleteCart(Integer id) {
+        cartRepository.deleteCartByCartID(id);
+    }
+
+    @Override
     public List<Cart> findCartsByAccountID(int id) {
         return cartRepository.findCartsByAccountID_AccountIDAndStatusOrderByCartIDDesc(id,Status.Enable);
+    }
+
+    @Override
+    public Cart findCartByCartID(int cartID) {
+        return cartRepository.findCartByCartID(cartID);
     }
 }

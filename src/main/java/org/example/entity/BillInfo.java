@@ -30,10 +30,6 @@ public class BillInfo {
     @JoinColumn(name = "ProductsizeID")
     private ProductSize productSizeID;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "DiscountID")
-    private Discount discountID;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "Status", nullable = false)
     protected Status status;;

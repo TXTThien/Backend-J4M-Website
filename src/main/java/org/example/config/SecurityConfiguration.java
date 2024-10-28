@@ -106,7 +106,7 @@ public class SecurityConfiguration {
                             .requestMatchers("/account/**").hasAuthority(user.name())
                             .requestMatchers("/review/**").hasAuthority(user.name())
                             .requestMatchers("/addToPrebuy/**").hasAuthority(user.name())
-                            .requestMatchers("/prebuy").hasAuthority(user.name())
+                            .requestMatchers("/prebuy/**").hasAuthority(user.name())
                             .anyRequest().authenticated();
                 })
                 .authenticationProvider(authenticationProvider)

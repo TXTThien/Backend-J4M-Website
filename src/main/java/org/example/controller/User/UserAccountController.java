@@ -83,7 +83,6 @@ public class UserAccountController {
             currentAccount.setEmail(updateAccountRequest.getEmail());
         }
 
-        // Cập nhật tài khoản trong cơ sở dữ liệu
         accountService.updateAccountInfo(currentAccount);
 
         return ResponseEntity.ok("Cập nhật thông tin tài khoản thành công.");

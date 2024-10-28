@@ -27,11 +27,11 @@ public class BillServiceImpl implements IBillService {
     }
 
     @Override
-    public Bill updateBillPaidStatus(Integer billId, Integer isPaid, String status) {
+    public Bill updateBillPaidStatus(Integer billId, Boolean isPaid, String status) {
         Optional<Bill> billOptional = billRepository.findById(billId);
         if (billOptional.isPresent()) {
             Bill bill = billOptional.get();
-            bill.setPaid(isPaid != 0 ? 1 : 0); // Chuyển đổi thành 0 hoặc 1
+            bill.setPaid(isPaid != false ? true : false); // Chuyển đổi thành 0 hoặc 1
             bill.setStatus(Status.valueOf(status)); // Cập nhật trạng thái
 
             return billRepository.save(bill);

@@ -11,6 +11,10 @@ public interface ICartService {
     Cart createCart(Cart cart);
     Cart updateCart(Integer id, Cart cartDetails);
     void deleteCart(Integer id);
+    void hardDeleteCart(Integer id);
 
     List<Cart> findCartsByAccountID(int id);
+
+    Cart findCartByCartID(int cartID);
+
 }

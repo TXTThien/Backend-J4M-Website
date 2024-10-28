@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface IBillService {
     List<Bill> getAllBills();
     Optional<Bill> getBillById(Integer billId);
-    Bill updateBillPaidStatus(Integer billId, Integer isPaid, String status);
+    Bill updateBillPaidStatus(Integer billId, Boolean isPaid, String status);
     void deleteBill(Integer billId);
     Bill updateBill(Bill bill);
 

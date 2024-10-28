@@ -10,4 +10,8 @@ public interface IProductSizeService {
     void deleteProductSize(int id);
 
     List<ProductSize> findProductSizeByProductID(int id);
+
+    ProductSize findProductSizeByProductIDAndSize(Integer id, String size);
+
+    void updateStock(int pz, int number);
 }

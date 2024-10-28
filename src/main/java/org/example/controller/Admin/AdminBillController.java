@@ -30,7 +30,7 @@ public class AdminBillController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateBillPaidStatus(@PathVariable("id") int id, @RequestBody Map<String, Object> payload) {
-        Integer isPaid = (Integer) payload.get("isPaid");
+        Boolean isPaid = (boolean) payload.get("isPaid");
         String status = (String) payload.get("status");
 
         Bill updatedBill = billService.updateBillPaidStatus(id, isPaid, status);

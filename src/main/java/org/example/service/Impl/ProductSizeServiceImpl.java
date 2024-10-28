@@ -62,4 +62,14 @@ public class ProductSizeServiceImpl implements IProductSizeService {
     public List<ProductSize> findProductSizeByProductID(int id) {
         return productSizeRepository.findProductSizesByProductIDProductIDAndStatus(id,Status.Enable);
     }
+
+    @Override
+    public ProductSize findProductSizeByProductIDAndSize(Integer id, String size) {
+        return productSizeRepository.findProductSizeByProductID_ProductIDAndAndSizeID_SizeNameAndStatus(id, size, Status.Enable);
+    }
+
+    @Override
+    public void updateStock(int pz, int number) {
+        productSizeRepository.UpdateStock(pz,number);
+    }
 }
