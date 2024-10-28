@@ -52,6 +52,7 @@ public class SecurityConfiguration {
             "/detail/**",
             "/homepage/**",
             "/news/**",
+            "/info",
     };
 
     private final JwtAuthenticationFilter jwtAuthFilter;

@@ -100,6 +100,7 @@ public class PaymentController {
         String vnp_SecureHash = ConfigVnpay.hmacSHA512(ConfigVnpay.vnp_HashSecret, hashData.toString());
         queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
         String paymentUrl = ConfigVnpay.vnp_PayUrl + "?" + queryUrl;
+        System.out.println("paymentUrl" + paymentUrl);
         return ResponseEntity.ok(paymentUrl);
     }
     @GetMapping("/payment_info")
