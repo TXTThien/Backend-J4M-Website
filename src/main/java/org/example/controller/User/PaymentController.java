@@ -1,6 +1,5 @@
 package org.example.controller.User;
 
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.example.config.ConfigVnpay;
 import org.example.service.ICartService;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLEncoder;
@@ -36,10 +34,9 @@ public class PaymentController {
     int [] cartID;
     int [] quantity;
     @PostMapping ("/setCart")
-    public ResponseEntity<String> setCart(@RequestParam("cartID") int[] cartIDs, @RequestParam("quantities") int [] quantities){
+    public void setCart(@RequestParam("cartID") int[] cartIDs, @RequestParam("quantities") int [] quantities){
         cartID = cartIDs;
         quantity = quantities;
-        return ResponseEntity.ok("Cart updated successfully.");
     }
     @GetMapping("/pay")
     public ResponseEntity<String>  getPay(@RequestParam("totalPayment") String totalPayment) throws UnsupportedEncodingException {
@@ -103,17 +100,18 @@ public class PaymentController {
         String vnp_SecureHash = ConfigVnpay.hmacSHA512(ConfigVnpay.vnp_HashSecret, hashData.toString());
         queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
         String paymentUrl = ConfigVnpay.vnp_PayUrl + "?" + queryUrl;
-        System.out.println("paymentUrl"+paymentUrl);
         return ResponseEntity.ok(paymentUrl);
     }
     @GetMapping("/payment_info")
-    public void transaction(@RequestParam Map<String, String> params, HttpServletResponse response) throws IOException {
+    public ResponseEntity<String> transaction(@RequestParam Map<String, String> params) {
         String responseCode = params.get("vnp_ResponseCode");
         if ("00".equals(responseCode)) {
             prebuyController.buyVNPay(cartID);
-            response.sendRedirect("http://localhost:8000/PaymentSuccess");
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body("Payment successful, redirecting to success page.");
         } else {
-            response.sendRedirect("http://localhost:8000/PaymentFailure");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Payment failed, redirecting to fail page.");
         }
     }
 }

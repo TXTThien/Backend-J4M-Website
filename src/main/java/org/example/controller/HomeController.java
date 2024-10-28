@@ -2,35 +2,51 @@ package org.example.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.dto.ProductDTO;
-import org.example.entity.Banner;
-import org.example.entity.Brand;
-import org.example.entity.News;
-import org.example.entity.Product;
+import org.example.entity.*;
+import org.example.entity.enums.Role;
 import org.example.entity.enums.Status;
+import org.example.service.IAccountService;
 import org.example.service.IBannerService;
 import org.example.service.INewsService;
 import org.example.service.IProductService;
-import org.example.service.Impl.BrandServiceImpl;
-import org.example.service.Impl.ProductServiceImpl;
+import org.example.service.securityService.GetIDAccountFromAuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:8000", allowCredentials = "true")
 public class HomeController {
     private final IProductService productService;
     private final IBannerService bannerService;
     private final INewsService newsService;
+    private final GetIDAccountFromAuthService getIDAccountService;
+    private final IAccountService accountService;
+    @RequestMapping("/info")
+    public ResponseEntity<?> info(@RequestHeader(value = "Account-ID",required = false) Integer  accountId) {
+        if (accountId == null) {
+            accountId = -1;
+        }
+        Account account = accountService.getAccountById(accountId);
+        System.out.println("idAccount:" + accountId);
+        Map<String, String> response = new HashMap<>();
+        if (accountId != -1 && account != null && account.getRole() == Role.user) {
+            response.put("redirectUrl", "http://localhost:8000/account");
+        } else if (accountId != -1 && account != null && account.getRole() == Role.admin) {
+            response.put("redirectUrl", "http://localhost:8000/dashboard");
+        } else {
+            response.put("redirectUrl", "http://localhost:8000/login");
+        }
+
+        return ResponseEntity.ok(response);
+    }
+
 
     @GetMapping({"/", "/home","/j4m"})
     public ResponseEntity<String> homePage() {
