@@ -63,7 +63,7 @@ public class PaymentController {
         vnp_Params.put("vnp_OrderType", orderType);
 
         vnp_Params.put("vnp_Locale", "vn");
-        vnp_Params.put("vnp_ReturnUrl", ConfigVnpay.vnp_ReturnUrl);
+        vnp_Params.put("vnp_ReturnUrl", ConfigVnpay.vnp_Returnurl);
         vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
 
         Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
@@ -97,12 +97,10 @@ public class PaymentController {
             }
         }
         String queryUrl = query.toString();
-        String vnp_SecureHash = ConfigVnpay.hmacSHA512(ConfigVnpay.secretKey, hashData.toString());
+        String vnp_SecureHash = ConfigVnpay.hmacSHA512(ConfigVnpay.vnp_HashSecret, hashData.toString());
         queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
         String paymentUrl = ConfigVnpay.vnp_PayUrl + "?" + queryUrl;
-        return ResponseEntity.status(HttpStatus.FOUND)
-                .location(URI.create(paymentUrl))
-                .build();
+        return ResponseEntity.ok(paymentUrl);
     }
     @GetMapping("/payment_info")
     public ResponseEntity<String> transaction(@RequestParam Map<String, String> params) {
