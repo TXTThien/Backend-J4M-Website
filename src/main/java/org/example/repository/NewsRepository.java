@@ -16,4 +16,7 @@ import java.util.List;
 public interface NewsRepository extends JpaRepository<News, Integer> {
     @Query("SELECT n FROM News n WHERE n.status = :status ORDER BY n.newsID DESC")
     List<News> findTop3ByStatusOrderByIdDesc(@Param("status") Status status, Pageable pageable);
+
+    List<News> findNewsByStatus(Status status);
+    News findNewsByNewsIDAndStatus(int id, Status status);
 }

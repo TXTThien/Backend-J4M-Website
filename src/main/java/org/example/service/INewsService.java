@@ -9,4 +9,8 @@ public interface INewsService {
     void deleteNews(int id);
 
     List<News> find3NewsEnable();
+
+    List<News> findAllEnable();
+
+    News findNewsbyNewsID(int id);
 }

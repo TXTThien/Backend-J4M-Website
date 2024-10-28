@@ -45,4 +45,14 @@ public class NewsServiceImpl implements INewsService {
         List<News> news = newsRepository.findTop3ByStatusOrderByIdDesc(Status.Enable, pageable);
         return news;
     }
+
+    @Override
+    public List<News> findAllEnable() {
+        return newsRepository.findNewsByStatus(Status.Enable);
+    }
+
+    @Override
+    public News findNewsbyNewsID(int id){
+        return newsRepository.findNewsByNewsIDAndStatus(id,Status.Enable);
+    }
 }
