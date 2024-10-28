@@ -152,6 +152,8 @@ public class UserPrebuyController {
                 cartService.deleteCart(cartID);
                 productSizeService.updateStock(productSize.getProductSizeID(), number);
             }
+            newBill.setPaid(true);
+            billRepository.save(newBill);
 
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body("Product purchased successfully.");
