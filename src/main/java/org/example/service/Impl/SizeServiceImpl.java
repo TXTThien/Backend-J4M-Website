@@ -19,7 +19,6 @@ public class SizeServiceImpl implements ISizeService {
         Size newSize = sizeRepository.findById(id).orElse(null);
         if (newSize!=null){
             newSize.setSizeName(size.getSizeName());
-            newSize.setBonus(size.getBonus());
             newSize.setStatus(size.getStatus());
 
             return sizeRepository.save(newSize);

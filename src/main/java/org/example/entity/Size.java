@@ -22,9 +22,6 @@ public class Size {
     @Column(name = "Sizename",length = 10,nullable = false)
     private String sizeName;
 
-    @Column(name = "Bonus", nullable = false, precision = 10, scale = 3)
-    private BigDecimal bonus;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "Status", nullable = false)
     protected Status status;

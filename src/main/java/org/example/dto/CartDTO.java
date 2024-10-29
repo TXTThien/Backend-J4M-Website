@@ -22,4 +22,5 @@ public class CartDTO {
     private String avatar;
     private BigDecimal productPrice;
     private List<String> sizes;
+    private List<Integer> stock;
 }

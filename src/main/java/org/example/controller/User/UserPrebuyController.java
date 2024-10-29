@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.Console;
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -49,16 +47,22 @@ public class UserPrebuyController {
                 cartDTO.setProductID(cart.getProductSizeID().getProductID().getProductID());
                 cartDTO.setAvatar(cart.getProductSizeID().getProductID().getAvatar());
                 cartDTO.setProductTitle(cart.getProductSizeID().getProductID().getTitle());
-                BigDecimal priceWithBonus = cart.getProductSizeID().getProductID().getPrice()
-                        .add(cart.getProductSizeID().getSizeID().getBonus());
+                BigDecimal priceWithBonus = cart.getProductSizeID().getProductID().getPrice() ;
                 cartDTO.setProductPrice(priceWithBonus);
 
                 List<String> sizes = cart.getProductSizeID().getProductID().getProductSizes()
                         .stream()
                         .map(productSize -> productSize.getSizeID().getSizeName())
                         .collect(Collectors.toList());
-
+                List<ProductSize> productSizes = productSizeService.findProductSizeByProductID(cart.getProductSizeID().getProductID().getProductID());
+                List<Integer> stockList = new ArrayList<>();
+                for (int i = 0; i < productSizes.size(); i++) {
+                    ProductSize productSize = productSizes.get(i);
+                    stockList.add(productSize.getStock());
+                }
                 cartDTO.setSizes(sizes);
+                cartDTO.setStock(stockList);
+
                 return cartDTO;
             }).collect(Collectors.toList());
             response.put("cart",cartDTOList);
