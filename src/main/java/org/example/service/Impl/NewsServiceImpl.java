@@ -40,8 +40,8 @@ public class NewsServiceImpl implements INewsService {
     }
 
     @Override
-    public List<News> find3NewsEnable() {
-        Pageable pageable = PageRequest.of(0, 3);
+    public List<News> find4NewsEnable() {
+        Pageable pageable = PageRequest.of(0, 4);
         List<News> news = newsRepository.findTop3ByStatusOrderByIdDesc(Status.Enable, pageable);
         return news;
     }

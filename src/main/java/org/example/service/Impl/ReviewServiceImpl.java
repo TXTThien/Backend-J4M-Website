@@ -9,6 +9,7 @@ import org.example.repository.ProductRepository;
 import org.example.repository.ReviewRepository;
 import org.example.service.IReviewService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -72,6 +73,12 @@ public class ReviewServiceImpl implements IReviewService {
     @Override
     public List<Review> findReviewByProductID(int id) {
         return reviewRepository.findReviewsByProductIDProductIDAndStatus(id, Status.Enable);
+    }
+
+    @Override
+    @Transactional
+    public void hardDeleteReview(int id) {
+        reviewRepository.deleteReviewByReviewID(id);
     }
 }
 

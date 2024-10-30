@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.Console;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -106,6 +108,7 @@ public class UserPrebuyController {
             newBill.setAccountID(account);
             newBill.setPaid(false);
             newBill.setStatus(Status.Enable);
+            newBill.setDate(LocalDateTime.now());
             billRepository.save(newBill);
 
             for (int cartID : cartIDs) {
@@ -140,6 +143,8 @@ public class UserPrebuyController {
             newBill.setAccountID(account);
             newBill.setPaid(false);
             newBill.setStatus(Status.Enable);
+            newBill.setDate(LocalDateTime.now());
+
             billRepository.save(newBill);
 
             for (int cartID : cartIDs) {

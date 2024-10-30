@@ -56,11 +56,10 @@ public class UserReviewController {
     public ResponseEntity<?> deleteReview(@PathVariable("id") int id) {
         Review review = reviewRepository.findById(id).orElse(null);
         if (review != null) {
-            reviewService.deleteReview(id);
+            reviewService.hardDeleteReview(id);
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.notFound().build();
         }
     }
-
 }

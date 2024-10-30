@@ -46,7 +46,24 @@ public class HomeController {
 
         return ResponseEntity.ok(response);
     }
+    @RequestMapping("/cart")
+    public ResponseEntity<?> cart(@RequestHeader(value = "Account-ID",required = false) Integer  accountId) {
+        if (accountId == null) {
+            accountId = -1;
+        }
+        Account account = accountService.getAccountById(accountId);
+        System.out.println("idAccount:" + accountId);
+        Map<String, String> response = new HashMap<>();
+        if (accountId != -1 && account != null && account.getRole() == Role.user) {
+            response.put("redirectUrl", "http://localhost:8000/prebuy");
+        } else if (accountId != -1 && account != null && account.getRole() == Role.admin) {
+            response.put("redirectUrl", "http://localhost:8000/dashboard");
+        } else {
+            response.put("redirectUrl", "http://localhost:8000/login");
+        }
 
+        return ResponseEntity.ok(response);
+    }
 
     @GetMapping({"/", "/home","/j4m"})
     public ResponseEntity<String> homePage() {
@@ -58,7 +75,7 @@ public class HomeController {
     public ResponseEntity<?> getBannerData() {
         Map<String, Object> response = new HashMap<>();
         List<Banner> bannerList = bannerService.find4BannerEnable();
-        List<News> newsList = newsService.find3NewsEnable();
+        List<News> newsList = newsService.find4NewsEnable();
         List<ProductDTO> productList = productService.find10HotestProductEnable();
 
         if (bannerList != null) {

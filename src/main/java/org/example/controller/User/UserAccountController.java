@@ -2,6 +2,7 @@ package org.example.controller.User;
 
 import lombok.RequiredArgsConstructor;
 import org.example.auth.ChangePassword;
+import org.example.dto.BuyHistoryDTO;
 import org.example.entity.Account;
 import org.example.entity.BillInfo;
 import org.example.entity.Review;
@@ -21,6 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,14 +53,31 @@ public class UserAccountController {
     @GetMapping("/bought")
     public ResponseEntity<Map<String, Object>> getHistoryBought() {
         int idAccount = getIDAccountService.common();
-        List<BillInfo> billInfo = billInfoService.findBillInfoByAccountID(idAccount, Status.Enable);
+        List<BillInfo> billInfos = billInfoService.findBillInfoByAccountID(idAccount, Status.Enable);
+        List<BuyHistoryDTO> buyHistoryDTOS = new ArrayList<>();
+
+        for (BillInfo billInfo : billInfos) {
+            BuyHistoryDTO buyHistoryDTO = new BuyHistoryDTO();
+
+            // Set values in BuyHistoryDTO from BillInfo
+            buyHistoryDTO.setDate(billInfo.getBillID().getDate());
+            buyHistoryDTO.setNumber(billInfo.getNumber());
+            buyHistoryDTO.setProductID(billInfo.getProductSizeID().getProductID().getProductID());
+            buyHistoryDTO.setProductTitle(billInfo.getProductSizeID().getProductID().getTitle());
+            buyHistoryDTO.setCost(billInfo.getProductSizeID().getProductID().getPrice());
+
+            // Add to the list
+            buyHistoryDTOS.add(buyHistoryDTO);
+        }
+
         List<Review> review = reviewService.findReviewByAccountID(idAccount, Status.Enable);
 
         Map<String, Object> response = new HashMap<>();
-        response.put("billInfo", billInfo);
+        response.put("billInfo", buyHistoryDTOS);
         response.put("review", review);
         return ResponseEntity.ok(response);
     }
+
 
     @PutMapping("/updateinfo")
     public ResponseEntity<String> updateAccountByAccountID(
