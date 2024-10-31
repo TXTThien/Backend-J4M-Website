@@ -71,4 +71,9 @@ public class ImageServiceImpl implements IImageService {
             imageRepository.save(image); // Lưu thay đổi
         }
     }
+
+    @Override
+    public List<Image> findImagesByProductID(int id) {
+        return imageRepository.findImagesByProduct_ProductIDAndStatus(id, Status.Enable);
+    }
 }

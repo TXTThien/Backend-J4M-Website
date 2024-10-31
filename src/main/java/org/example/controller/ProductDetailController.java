@@ -22,6 +22,8 @@ public class ProductDetailController {
     private final IProductService productService;
     private final IReviewService reviewService;
     private final IProductSizeService productSizeService;
+    private final IImageService iImageService;
+
     private final ICartService cartService;
     private final IAccountService accountService;
 
@@ -32,13 +34,14 @@ public class ProductDetailController {
         Product product = productService.getProductById(id);
         List<Review> reviewList = reviewService.findReviewByProductID (id);
         List<ProductSize> productSizesList = productSizeService.findProductSizeByProductID(id);
-
+        List<Image> imageList = iImageService.findImagesByProductID(id);
         Map<String, Object> response = new HashMap<>();
 
         if (product != null && product.getStatus() == Status.Enable) {
             response.put("product", product);
             response.put("reviews", reviewList);
             response.put("productSizes", productSizesList);
+            response.put("imageList", imageList);
             return ResponseEntity.ok(response);
         } else {
             response.put("message", "Product not available or disabled.");

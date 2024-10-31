@@ -12,4 +12,5 @@ public interface IImageService {
     void deleteImage(Integer id);
     void disableImage(Integer id);
 
+    List<Image> findImagesByProductID(int id);
 }
