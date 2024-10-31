@@ -22,7 +22,7 @@ public class Review {
     private Integer reviewID;
 
     @Column(name = "Rating")
-    private Integer rating;
+    private Float rating;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ProductID")
