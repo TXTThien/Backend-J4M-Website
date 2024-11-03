@@ -23,7 +23,7 @@ public class Image {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ProductID", nullable = false)
-    private Product product; // Chắc chắn đây là Product, không phải productID
+    private Product product;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "Status", nullable = false)
