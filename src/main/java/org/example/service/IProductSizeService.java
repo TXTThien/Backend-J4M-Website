@@ -14,4 +14,6 @@ public interface IProductSizeService {
     ProductSize findProductSizeByProductIDAndSize(Integer id, String size);
 
     void updateStock(int pz, int number);
+
+    ProductSize findProductSizeByID(int productSizeID);
 }

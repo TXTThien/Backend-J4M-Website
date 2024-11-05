@@ -108,6 +108,18 @@ public class ProductServiceImpl implements IProductService {
         List<ProductDTO> top10BestSellingProducts = productRepository.findTop10BestSellingProducts(topTen);
         return top10BestSellingProducts;
     }
+
+    @Override
+    public List<Product> findProductWithBrand(Integer brandID) {
+        Pageable topTen = PageRequest.of(0, 8);
+        return productRepository.findProductsByBrandIDBrandIDAndStatusOrderByProductIDDesc(brandID,topTen,Status.Enable);
+    }
+
+    @Override
+    public List<Product> findProductSimilar(Integer productTypeID) {
+        Pageable topTen = PageRequest.of(0, 20);
+        return productRepository.findProductsByProductType_ProductTypeIDAndStatusOrderByProductIDDesc(productTypeID,topTen,Status.Enable);
+    }
 }
 
 

@@ -16,7 +16,7 @@ import java.util.List;
 public interface ProductSizeRepository extends JpaRepository<ProductSize, Integer> {
     List<ProductSize> findProductSizesByProductIDProductIDAndStatus(int id, Status status);
     ProductSize findProductSizeByProductID_ProductIDAndAndSizeID_SizeNameAndStatus(int id, String size, Status status);
-
+    ProductSize findProductSizeByProductSizeIDAndStatus(int id, Status status);
     @Transactional
     @Modifying
     @Query("UPDATE ProductSize ps SET ps.stock = ps.stock- :number WHERE ps.productSizeID = :pz")

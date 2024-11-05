@@ -2,6 +2,7 @@ package org.example.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.example.dto.PrebuyDTO;
 import org.example.entity.*;
 import org.example.entity.enums.Status;
 import org.example.service.*;
@@ -35,6 +36,9 @@ public class ProductDetailController {
         List<Review> reviewList = reviewService.findReviewByProductID (id);
         List<ProductSize> productSizesList = productSizeService.findProductSizeByProductID(id);
         List<Image> imageList = iImageService.findImagesByProductID(id);
+        List<Product> productBrand = productService.findProductWithBrand(product.getBrandID().getBrandID());
+        List<Product> productSimilar = productService.findProductSimilar(product.getProductType().getProductTypeID());
+
         Map<String, Object> response = new HashMap<>();
 
         if (product != null && product.getStatus() == Status.Enable) {
@@ -42,6 +46,9 @@ public class ProductDetailController {
             response.put("reviews", reviewList);
             response.put("productSizes", productSizesList);
             response.put("imageList", imageList);
+            response.put("productBrand", productBrand);
+            response.put("productSimilar", productSimilar);
+
             return ResponseEntity.ok(response);
         } else {
             response.put("message", "Product not available or disabled.");
@@ -49,21 +56,20 @@ public class ProductDetailController {
         }
     }
     @PostMapping("/addToPrebuy")
-    public  ResponseEntity<?> AddToCart (@RequestBody Cart cart){
+    public  ResponseEntity<?> AddToCart (@RequestBody PrebuyDTO prebuyDTO){
         int idAccount = getIDAccountService.common();
         Account account = accountService.getAccountById(idAccount);
+        ProductSize productSize =  productSizeService.findProductSizeByID(prebuyDTO.getProductSizeID());
+
         try {
-            if (cart.getProductSizeID() == null) {
-                return ResponseEntity.badRequest().body("ProductSizeID cannot be null.");
-            }
-            if (cart.getAccountID() == null) {
-                cart.setAccountID(account);
-            }
-            if (cart.getStatus() == null) {
-                cart.setStatus(Status.Enable);
-            }
-            Cart createdCart = cartService.createCart(cart);
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdCart);
+            Cart cart = new Cart();
+            cart.setProductSizeID(productSize);
+            cart.setNumber(prebuyDTO.getNumber());
+            cart.setAccountID(account);
+            cart.setStatus(Status.Enable);
+
+            Cart createCart = cartService.createCart(cart);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createCart);
 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while creating the cart.");

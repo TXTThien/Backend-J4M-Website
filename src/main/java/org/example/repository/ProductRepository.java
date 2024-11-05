@@ -4,6 +4,7 @@ import org.example.dto.ProductDTO;
 import org.example.entity.Brand;
 import org.example.entity.Product;
 import org.example.entity.enums.Status;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -24,7 +25,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     List<Product> findProductsByProductTypeCategoryIDCategoryNameAndStatus(String Category , Status status);
 
     List<Product> findProductsByProductTypeTypeNameAndStatus(String ProductType , Status status);
-
+    List<Product> findProductsByBrandIDBrandIDAndStatusOrderByProductIDDesc(int id,Pageable pageable,Status status);
+    List<Product>findProductsByProductType_ProductTypeIDAndStatusOrderByProductIDDesc(int id, Pageable pageable, Status status);
     @Query("SELECT new org.example.dto.ProductDTO(p.productID, p.avatar, p.title, SUM(bi.number), p.material, p.price) " +
             "FROM Product p " +
             "JOIN ProductSize ps ON ps.productID = p " +

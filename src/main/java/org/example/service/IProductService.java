@@ -27,5 +27,9 @@ public interface IProductService {
     List<Product> findByTitle(String title, Status status);
 
     List<ProductDTO> find10HotestProductEnable();
+
+    List<Product> findProductWithBrand(Integer brandID);
+
+    List<Product> findProductSimilar(Integer productTypeID);
 }
 
