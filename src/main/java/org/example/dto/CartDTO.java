@@ -20,6 +20,7 @@ public class CartDTO {
     private Integer productID;
     private String productTitle;
     private String avatar;
+    private String sizeChoose;
     private BigDecimal productPrice;
     private List<String> sizes;
     private List<Integer> stock;

@@ -120,6 +120,11 @@ public class ProductServiceImpl implements IProductService {
         Pageable topTen = PageRequest.of(0, 20);
         return productRepository.findProductsByProductType_ProductTypeIDAndStatusOrderByProductIDDesc(productTypeID,topTen,Status.Enable);
     }
+
+    @Override
+    public Integer HowManyBought(int id) {
+        return productRepository.HowManyBought(id);
+    }
 }
 
 

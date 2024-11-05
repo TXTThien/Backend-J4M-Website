@@ -38,7 +38,7 @@ public class ProductDetailController {
         List<Image> imageList = iImageService.findImagesByProductID(id);
         List<Product> productBrand = productService.findProductWithBrand(product.getBrandID().getBrandID());
         List<Product> productSimilar = productService.findProductSimilar(product.getProductType().getProductTypeID());
-
+        int howManyBought = productService.HowManyBought(id);
         Map<String, Object> response = new HashMap<>();
 
         if (product != null && product.getStatus() == Status.Enable) {
@@ -48,6 +48,7 @@ public class ProductDetailController {
             response.put("imageList", imageList);
             response.put("productBrand", productBrand);
             response.put("productSimilar", productSimilar);
+            response.put("howManyBought", howManyBought);
 
             return ResponseEntity.ok(response);
         } else {

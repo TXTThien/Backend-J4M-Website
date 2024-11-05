@@ -35,6 +35,12 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             "ORDER BY SUM(bi.number) DESC")
     List<ProductDTO> findTop10BestSellingProducts(Pageable pageable);
 
+    @Query("SELECT COALESCE(SUM(bi.number), 0) " +
+            "FROM Product p " +
+            "JOIN ProductSize ps ON ps.productID = p " +
+            "JOIN Billinfo bi ON bi.productSizeID = ps " +
+            "WHERE bi.status = 'Enable' AND p.productID = :id")
+    int HowManyBought(@Param("id") int id);
 
     @Query("SELECT p FROM ProductSize ps " +
             "JOIN Product p ON ps.productID = p " +

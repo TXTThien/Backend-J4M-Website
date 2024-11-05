@@ -31,5 +31,7 @@ public interface IProductService {
     List<Product> findProductWithBrand(Integer brandID);
 
     List<Product> findProductSimilar(Integer productTypeID);
+
+    Integer HowManyBought(int id);
 }
 

@@ -44,6 +44,7 @@ public class UserPrebuyController {
             List<CartDTO> cartDTOList = cartList.stream().map(cart -> {
                 CartDTO cartDTO = new CartDTO();
                 cartDTO.setCartID(cart.getCartID());
+                cartDTO.setSizeChoose(cart.getProductSizeID().getSizeID().getSizeName());
                 cartDTO.setNumber(cart.getNumber());
                 cartDTO.setStatus(cart.getStatus());
                 cartDTO.setProductID(cart.getProductSizeID().getProductID().getProductID());
