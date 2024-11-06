@@ -1,6 +1,7 @@
 package org.example.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -24,12 +25,12 @@ public class Discount {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CategoryID")
-    @JsonManagedReference
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Category categoryID;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ProductTypeID")
-    @JsonManagedReference
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private ProductType productTypeID;
 
     @Column(name = "Discountpercent", precision = 5, scale = 2)
