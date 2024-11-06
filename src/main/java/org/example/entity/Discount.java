@@ -24,12 +24,12 @@ public class Discount {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CategoryID")
-    @JsonIgnore
+    @JsonManagedReference
     private Category categoryID;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ProductTypeID")
-    @JsonBackReference
+    @JsonManagedReference
     private ProductType productTypeID;
 
     @Column(name = "Discountpercent", precision = 5, scale = 2)

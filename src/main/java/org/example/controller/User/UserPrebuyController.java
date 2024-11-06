@@ -53,6 +53,11 @@ public class UserPrebuyController {
                 BigDecimal priceWithBonus = cart.getProductSizeID().getProductID().getPrice() ;
                 cartDTO.setProductPrice(priceWithBonus);
 
+                ProductType productType = cart.getProductSizeID().getProductID().getProductType();
+                cartDTO.setProductTypeID(productType.getProductTypeID());
+                cartDTO.setCategoryID(productType.getCategoryID().getCategoryID()); // Truy cập CategoryID
+
+
                 List<String> sizes = cart.getProductSizeID().getProductID().getProductSizes()
                         .stream()
                         .map(productSize -> productSize.getSizeID().getSizeName())

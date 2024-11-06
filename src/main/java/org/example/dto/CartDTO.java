@@ -24,4 +24,6 @@ public class CartDTO {
     private BigDecimal productPrice;
     private List<String> sizes;
     private List<Integer> stock;
+    private Integer productTypeID;
+    private Integer categoryID;
 }
