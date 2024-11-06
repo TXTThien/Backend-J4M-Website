@@ -33,6 +33,4 @@ public class ProductType {
     @OneToMany(mappedBy = "productTypeID", fetch = FetchType.LAZY)
     private List<Discount> discounts;
 
-
-
 }

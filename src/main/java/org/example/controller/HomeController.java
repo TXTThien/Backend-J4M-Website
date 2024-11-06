@@ -5,10 +5,9 @@ import org.example.dto.ProductDTO;
 import org.example.entity.*;
 import org.example.entity.enums.Role;
 import org.example.entity.enums.Status;
-import org.example.service.IAccountService;
-import org.example.service.IBannerService;
-import org.example.service.INewsService;
-import org.example.service.IProductService;
+import org.example.repository.CategoryRepository;
+import org.example.repository.ProductTypeRepository;
+import org.example.service.*;
 import org.example.service.securityService.GetIDAccountFromAuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +27,8 @@ public class HomeController {
     private final INewsService newsService;
     private final GetIDAccountFromAuthService getIDAccountService;
     private final IAccountService accountService;
+    private final CategoryRepository categoryRepository;
+    private final ProductTypeRepository productTypeRepository;
     @RequestMapping("/info")
     public ResponseEntity<?> info(@RequestHeader(value = "Account-ID",required = false) Integer  accountId) {
         if (accountId == null) {
@@ -52,7 +53,6 @@ public class HomeController {
             accountId = -1;
         }
         Account account = accountService.getAccountById(accountId);
-        System.out.println("idAccount:" + accountId);
         Map<String, String> response = new HashMap<>();
         if (accountId != -1 && account != null && account.getRole() == Role.user) {
             response.put("redirectUrl", "http://localhost:8000/prebuy");
@@ -77,7 +77,8 @@ public class HomeController {
         List<Banner> bannerList = bannerService.find4BannerEnable();
         List<News> newsList = newsService.find4NewsEnable();
         List<ProductDTO> productList = productService.find10HotestProductEnable();
-
+        List<Category> categories = categoryRepository.findAllByStatus(Status.Enable);
+        List<ProductType> productTypes = productTypeRepository.findAllByStatus(Status.Enable);
         if (bannerList != null) {
             response.put("bannerList", bannerList);
         }
@@ -86,6 +87,12 @@ public class HomeController {
         }
         if (productList != null) {
             response.put("productList", productList);
+        }
+        if (categories != null) {
+            response.put("categories", categories);
+        }
+        if (productTypes != null) {
+            response.put("productTypes", productTypes);
         }
         return !response.isEmpty() ?
                 ResponseEntity.ok(response) :
