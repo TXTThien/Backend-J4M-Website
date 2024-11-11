@@ -48,7 +48,7 @@ public class NewsServiceImpl implements INewsService {
 
     @Override
     public List<News> findAllEnable() {
-        return newsRepository.findNewsByStatus(Status.Enable);
+        return newsRepository.findNewsByStatusOrderByDateDesc(Status.Enable);
     }
 
     @Override

@@ -27,40 +27,57 @@ public class ProductController {
     private final ISizeService sizeService;
 
     @GetMapping("")
-    public ResponseEntity<?> getListProduct() {
-        List<Product> productList = productService.findAllEnable();
-        List<Category> categoryList = categoryService.findAllEnable();
-        List<ProductType> productTypeList = productTypeService.findAllEnable();
-        List<Brand> brandList = brandService.findAllEnable();
-        List<Origin> originList = originService.findAllEnable();
-        List<Size> sizeList = sizeService.findAllEnable();
-        Map<String, Object> response = new HashMap<>();
+    public ResponseEntity<?> getListProduct(
+            @RequestParam(value = "origin", required = false) Integer origin,
+            @RequestParam(value = "size", required = false) Integer size,
+            @RequestParam(value = "category", required = false) Integer category,
+            @RequestParam(value = "productType", required = false) Integer productType,
+            @RequestParam(value = "brand", required = false) Integer brand) {
 
-        if (!productList.isEmpty()) {
-            response.put("products", productList);
-        }
-        if (!categoryList.isEmpty()) {
-            response.put("category", categoryList);
-        }
-        if (!originList.isEmpty()) {
-            response.put("origin", originList);
-        }
-        if (!brandList.isEmpty()) {
-            response.put("brand", brandList);
-        }
-        if (!productTypeList.isEmpty()) {
-            response.put("productType", productTypeList);
-        }
-        if (!productTypeList.isEmpty()) {
-            response.put("size", sizeList);
-        }
-        if (!response.isEmpty()){
-            return ResponseEntity.ok(response);
-        }
-        else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No products found");
+        try {
+            if (origin != null || size != null || category != null || productType != null || brand != null) {
+                List<Product> sortProduct = productService.sortProduct(
+                        origin != null ? origin : 0,
+                        size != null ? size : 0,
+                        category != null ? category : 0,
+                        productType != null ? productType : 0,
+                        brand != null ? brand : 0
+                );
+
+                // Kiểm tra nếu danh sách sắp xếp rỗng
+                if (sortProduct.isEmpty()) {
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No sorted products found");
+                }
+                return ResponseEntity.ok(sortProduct);
+            }
+
+            // Nếu không có tham số sắp xếp, trả về tất cả các danh sách
+            List<Product> productList = productService.findAllEnable();
+            List<Category> categoryList = categoryService.findAllEnable();
+            List<ProductType> productTypeList = productTypeService.findAllEnable();
+            List<Brand> brandList = brandService.findAllEnable();
+            List<Origin> originList = originService.findAllEnable();
+            List<Size> sizeList = sizeService.findAllEnable();
+
+            Map<String, Object> response = new HashMap<>();
+            if (!productList.isEmpty()) response.put("products", productList);
+            if (!categoryList.isEmpty()) response.put("category", categoryList);
+            if (!originList.isEmpty()) response.put("origin", originList);
+            if (!brandList.isEmpty()) response.put("brand", brandList);
+            if (!productTypeList.isEmpty()) response.put("productType", productTypeList);
+            if (!sizeList.isEmpty()) response.put("size", sizeList);
+
+            if (!response.isEmpty()) {
+                return ResponseEntity.ok(response);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No products found");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An error occurred: " + e.getMessage());
         }
     }
+
     @RequestMapping("/sort")
     public ResponseEntity<?> sortListProduct(
             @RequestParam(value = "origin", required = false) Integer origin,

@@ -77,17 +77,17 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public List<Product> findByBrand(String brand, Status status) {
-        return productRepository.findProductsByBrandIDBrandNameAndStatus(brand, status);
+        return productRepository.findProductsByBrandIDBrandNameAndStatusOrderByProductIDDesc(brand, status);
     }
 
     @Override
     public List<Product> findByCategory(String category, Status status) {
-        return productRepository.findProductsByProductTypeCategoryIDCategoryNameAndStatus(category, status);
+        return productRepository.findProductsByProductTypeCategoryIDCategoryNameAndStatusOrderByProductIDDesc(category, status);
     }
 
     @Override
     public List<Product> findByProductType(String producttype, Status status) {
-        return productRepository.findProductsByProductTypeTypeNameAndStatus(producttype, status);
+        return productRepository.findProductsByProductTypeTypeNameAndStatusOrderByProductIDDesc(producttype, status);
     }
 
     @Override
@@ -99,7 +99,7 @@ public class ProductServiceImpl implements IProductService {
     @Override
 
     public List<Product> findByTitle(String title, Status status) {
-        return productRepository.findProductsByTitleContainingAndStatus(title, status);
+        return productRepository.findProductsByTitleContainingAndStatusOrderByProductIDDesc(title, status);
     }
 
     @Override

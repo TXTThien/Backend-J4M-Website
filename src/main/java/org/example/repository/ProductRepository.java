@@ -18,13 +18,13 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     List<Product> findProductByStatusOrderByProductIDDesc(Status status);
 
-    List<Product> findProductsByTitleContainingAndStatus(String title , Status status);
+    List<Product> findProductsByTitleContainingAndStatusOrderByProductIDDesc(String title , Status status);
 
-    List<Product> findProductsByBrandIDBrandNameAndStatus(String brand, Status status);
+    List<Product> findProductsByBrandIDBrandNameAndStatusOrderByProductIDDesc(String brand, Status status);
 
-    List<Product> findProductsByProductTypeCategoryIDCategoryNameAndStatus(String Category , Status status);
+    List<Product> findProductsByProductTypeCategoryIDCategoryNameAndStatusOrderByProductIDDesc(String Category , Status status);
 
-    List<Product> findProductsByProductTypeTypeNameAndStatus(String ProductType , Status status);
+    List<Product> findProductsByProductTypeTypeNameAndStatusOrderByProductIDDesc(String ProductType , Status status);
     List<Product> findProductsByBrandIDBrandIDAndStatusOrderByProductIDDesc(int id,Pageable pageable,Status status);
     List<Product>findProductsByProductType_ProductTypeIDAndStatusOrderByProductIDDesc(int id, Pageable pageable, Status status);
     @Query("SELECT new org.example.dto.ProductDTO(p.productID, p.avatar, p.title, SUM(bi.number), p.material, p.price) " +
@@ -54,7 +54,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             "AND (COALESCE(:categoryid, 0) = 0 OR c.categoryID = :categoryid) " +
             "AND (COALESCE(:producttypeid, 0) = 0 OR pt.productTypeID = :producttypeid) " +
             "AND (COALESCE(:brandid, 0) = 0 OR b.brandID = :brandid)"+
-            "AND p.status = 'Enable' ")
+            "AND p.status = 'Enable' ORDER BY p.productID DESC ")
     List<Product> sortProduct(@Param("originid") Integer originid,
                               @Param("sizeid") Integer sizeid,
                               @Param("categoryid") Integer categoryid,
