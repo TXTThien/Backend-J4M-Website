@@ -1,5 +1,6 @@
 package org.example.controller.User;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.CartDTO;
 import org.example.dto.CartUpdateRequest;
@@ -34,11 +35,12 @@ public class UserPrebuyController {
     private final GetIDAccountFromAuthService getIDAccountFromAuthService;
 
     @GetMapping("")
-    public ResponseEntity<?> getCart() {
+    public ResponseEntity<?> getCart(HttpServletRequest request) {
         int id = getIDAccountFromAuthService.common();
         List<Cart> cartList = cartService.findCartsByAccountID(id);
         List<Discount> discounts = discountRepository.findAll();
         Map<String, Object> response = new HashMap<>();
+        request.getSession().setAttribute("accountID", id);
 
         if (cartList != null) {
             List<CartDTO> cartDTOList = cartList.stream().map(cart -> {
@@ -140,14 +142,13 @@ public class UserPrebuyController {
                     .body("Error occurred while creating product: " + e.getMessage());
         }
     }
-    public ResponseEntity<?> buyVNPay(int[] cartIDs) {
+    public ResponseEntity<?> buyVNPay(int[] cartIDs, int accountId) {
         try {
-            int id = getIDAccountFromAuthService.common();
-            Account account = accountService.getAccountById(id);
+            Account account = accountService.getAccountById(accountId);
 
             Bill newBill = new Bill();
             newBill.setAccountID(account);
-            newBill.setPaid(false);
+            newBill.setPaid(true);
             newBill.setStatus(Status.Enable);
             newBill.setDate(LocalDateTime.now());
 
@@ -167,7 +168,6 @@ public class UserPrebuyController {
                 cartService.deleteCart(cartID);
                 productSizeService.updateStock(productSize.getProductSizeID(), number);
             }
-            newBill.setPaid(true);
             billRepository.save(newBill);
 
             return ResponseEntity.status(HttpStatus.CREATED)
@@ -178,6 +178,7 @@ public class UserPrebuyController {
                     .body("Error occurred while creating product: " + e.getMessage());
         }
     }
+
 
 
 }

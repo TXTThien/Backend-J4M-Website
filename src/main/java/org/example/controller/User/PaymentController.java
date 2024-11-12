@@ -1,5 +1,6 @@
 package org.example.controller.User;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.example.config.ConfigVnpay;
@@ -107,10 +108,12 @@ public class PaymentController {
         return ResponseEntity.ok(paymentUrl);
     }
     @GetMapping("/payment_info")
-    public void transaction(@RequestParam Map<String, String> params, HttpServletResponse response) throws IOException {
+    public void transaction(@RequestParam Map<String, String> params, HttpServletRequest request, HttpServletResponse response) throws IOException {
         String responseCode = params.get("vnp_ResponseCode");
+        int accountId = (int) request.getSession().getAttribute("accountID");
+
         if ("00".equals(responseCode)) {
-            prebuyController.buyVNPay(cartID);
+            prebuyController.buyVNPay(cartID, accountId);
             response.sendRedirect("http://localhost:8000/PaymentSuccess");
         } else {
             response.sendRedirect("http://localhost:8000/PaymentFailure");

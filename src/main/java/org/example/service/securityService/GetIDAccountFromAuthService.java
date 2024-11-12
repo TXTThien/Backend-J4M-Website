@@ -24,7 +24,7 @@ public class GetIDAccountFromAuthService {
 
     public int common() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        int idAccount = -1; // Default value if user is not authenticated
+        int idAccount = -1;
 
         if (auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken)) {
             var account = accountRepository.findByUsername(auth.getName());
