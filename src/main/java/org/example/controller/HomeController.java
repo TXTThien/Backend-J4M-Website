@@ -37,13 +37,18 @@ public class HomeController {
         Account account = accountService.getAccountById(accountId);
         System.out.println("idAccount:" + accountId);
         Map<String, String> response = new HashMap<>();
-        if (accountId != -1 && account != null && account.getRole() == Role.user) {
-            response.put("redirectUrl", "http://localhost:8000/account");
-        } else if (accountId != -1 && account != null && account.getRole() == Role.admin) {
-            response.put("redirectUrl", "http://localhost:8000/dashboard");
-        } else {
+        if (accountId != -1 && account != null){
+            if (account.getRole() == Role.user){
+                response.put("redirectUrl", "http://localhost:8000/account");
+            }
+            else if (account.getRole() == Role.admin){
+                response.put("redirectUrl", "http://localhost:8000/dashboard");
+            }
+        }
+        else {
             response.put("redirectUrl", "http://localhost:8000/login");
         }
+
 
         return ResponseEntity.ok(response);
     }
@@ -54,11 +59,15 @@ public class HomeController {
         }
         Account account = accountService.getAccountById(accountId);
         Map<String, String> response = new HashMap<>();
-        if (accountId != -1 && account != null && account.getRole() == Role.user) {
-            response.put("redirectUrl", "http://localhost:8000/prebuy");
-        } else if (accountId != -1 && account != null && account.getRole() == Role.admin) {
-            response.put("redirectUrl", "http://localhost:8000/dashboard");
-        } else {
+        if (accountId != -1 && account != null){
+            if (account.getRole() == Role.user){
+                response.put("redirectUrl", "http://localhost:8000/prebuy");
+            }
+            else if (account.getRole() == Role.admin){
+                response.put("redirectUrl", "http://localhost:8000/dashboard");
+            }
+        }
+        else {
             response.put("redirectUrl", "http://localhost:8000/login");
         }
 
